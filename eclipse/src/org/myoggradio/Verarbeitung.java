@@ -14,7 +14,7 @@ public class Verarbeitung {
 		props.setProperty("mail.store.protocol", "imaps");
 		Session session = Session.getDefaultInstance(props, null);
 		Store store = session.getStore("imaps");
-		store.connect("imaps.udag.de", "christian@myoggradio.org", "angelika57");
+		store.connect(Parameter.mail_server,Parameter.mail_user,Parameter.mail_passwort);
 		IMAPFolder folder = (IMAPFolder) store.getFolder("inbox");
 		if (!folder.isOpen())
 			folder.open(Folder.READ_ONLY);
