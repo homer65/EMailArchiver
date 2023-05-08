@@ -72,8 +72,9 @@ public class Postgres
     		System.out.println(e.toString());
     	}
     }
-    public void insertMessage(Message msg,ArrayList<String> tags)
+    public String insertMessage(Message msg,ArrayList<String> tags)
     {
+    	String erg = null;
     	if (con == null) connect();
  		String subject = "unkown";
 		String typ = "";
@@ -184,6 +185,18 @@ public class Postgres
 		{
 			System.out.println("Postgres:insertMessage:Exception:");
 			System.out.println(e.toString());
+			erg = e.toString();
+			try
+			{
+				con.rollback();
+			}
+			catch (Exception ex)
+			{
+				System.out.println("Postgres:insertMessage:rollback:Exception:");
+				System.out.println(e.toString());
+			}
 		}
-     }
+		close();
+		return erg;
+    }
 }

@@ -9,12 +9,14 @@ import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
@@ -24,6 +26,8 @@ public class EineMessageMenu extends JFrame implements ActionListener
 	private Message msg = null;
 	private JButton butt1 = new JButton("Show");
 	private JButton butt2 = new JButton("Archive");
+	private JTextField tf1 = new JTextField();
+	private JLabel ltf1 = new JLabel("Tags ");
 	public EineMessageMenu(Message msg)
 	{
 		super("Eine Message Menu");
@@ -93,9 +97,14 @@ public class EineMessageMenu extends JFrame implements ActionListener
 		bpan.setLayout(new GridLayout(1,2));
 		bpan.add(butt1);
 		bpan.add(butt2);
+		JPanel tpan = new JPanel();
+		tpan.setLayout(new BorderLayout());
+		tpan.add(ltf1,BorderLayout.WEST);
+		tpan.add(tf1,BorderLayout.CENTER);
 		JPanel cpan = new JPanel();
 		cpan.setLayout(new BorderLayout());
 		cpan.add(lpan,BorderLayout.NORTH);
+		cpan.add(tpan,BorderLayout.CENTER);
 		cpan.add(bpan,BorderLayout.SOUTH);
 		butt1.addActionListener(this);
 		butt2.addActionListener(this);
@@ -128,7 +137,23 @@ public class EineMessageMenu extends JFrame implements ActionListener
 		}
 		if (quelle == butt2)
 		{
-			
+			String tags = tf1.getText();
+			if (tags == null) tags = "";
+			String[] worte = tags.split(" ");
+			ArrayList<String> altags = new ArrayList<String>();
+			for (int i=0;i<worte.length;i++)
+			{
+				String tag = worte[i];
+				altags.add(tag);
+			}
+			Postgres postgres = new Postgres();
+			String erg = postgres.insertMessage(msg,altags);
+			if (erg != null)
+			{
+				System.out.println("Postgres returned: ");
+				System.out.println(erg);
+			}
+			dispose();
 		}
 		
 	}

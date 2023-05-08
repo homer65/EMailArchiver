@@ -27,4 +27,8 @@ CREATE TABLE public.tags (
 );
 create user email with password 'email';
 grant all on email to email;
+grant all on body to email;
+grant all on sfrom to email;
+grant all on sto to email;
+grant all on tags to email;
 
