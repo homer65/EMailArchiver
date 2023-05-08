@@ -1,8 +1,8 @@
 mail_server=imaps.udag.de=
 mail_user=christian@myoggradio.org=
 mail_passwort=xxx=
-pg_server=45.129.182.115=
-pg_port=5432=
+pg_url=jdbc:postgres://45.129.182.115:5432/email=
+pg_driver=org.postgres.Driver=
 pg_user=email=
 pg_passwort=xxx=
 pg_db=email=
