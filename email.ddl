@@ -9,6 +9,11 @@ CREATE TABLE public.email (
     sto bigint,
     groesse integer
 );
+CREATE UNIQUE INDEX email_i1
+    ON public.email
+    (
+     send
+    ); 
 CREATE TABLE public.body (
     id bigint,
     wert bytea
