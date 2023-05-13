@@ -143,17 +143,27 @@ public class EineMessageMenu extends JFrame implements ActionListener
 			ArrayList<String> altags = new ArrayList<String>();
 			for (int i=0;i<worte.length;i++)
 			{
-				String tag = worte[i];
-				altags.add(tag);
+				String tag = worte[i].toLowerCase();
+				if (!tag.equals(""))
+				{
+					altags.add(tag);
+				}
 			}
-			Postgres postgres = new Postgres();
-			String erg = postgres.insertMessage(msg,altags);
-			if (erg != null)
+			if (altags.size() > 0)
 			{
-				System.out.println("Postgres returned: ");
-				System.out.println(erg);
+				Postgres postgres = new Postgres();
+				String erg = postgres.insertMessage(msg,altags);
+				if (erg != null)
+				{
+					System.out.println("Postgres returned: ");
+					System.out.println(erg);
+				}
+				dispose();
 			}
-			dispose();
+			else
+			{
+				System.out.println("Mindestens einen Tag vorgeben");
+			}
 		}
 		
 	}
