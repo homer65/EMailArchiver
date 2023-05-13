@@ -2,6 +2,7 @@ package org.myoggradio;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -99,6 +100,176 @@ public class Postgres
         catch (Exception e) 
         {
             System.out.println("Postgres:getAllTags:Exception:");
+            System.out.println(e.toString());
+        }
+        return erg;
+    }
+    public InputStream getBody(long id)
+    {
+       	if (con == null) connect();
+       	InputStream erg = null;
+        ResultSet rs = null;
+        String sql = "select wert";
+        sql += " from body";
+        sql += " where id = ?";
+        try 
+        {
+            stmt = con.prepareStatement(sql);
+            stmt.setLong(1,id);
+            rs = stmt.executeQuery();
+            while (rs.next())
+            {
+            	erg = rs.getBinaryStream(1);
+            }
+            rs.close();
+            stmt.close();
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("Postgres:getBody:Exception:");
+            System.out.println(e.toString());
+        }
+        return erg;
+    }
+    public ArrayList<Long> getOneTag(String tag)
+    {
+       	if (con == null) connect();
+    	ArrayList<Long> erg = new ArrayList<Long>();
+        ResultSet rs = null;
+        String sql = "select email_id";
+        sql += " from tags";
+        sql += " where tag = ?";
+        sql += " order by email_id desc";
+        try 
+        {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1,tag);
+            rs = stmt.executeQuery();
+            while (rs.next())
+            {
+            	long id = rs.getLong(1);
+            	erg.add(id);
+            }
+            rs.close();
+            stmt.close();
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("Postgres:getOneTag:Exception:");
+            System.out.println(e.toString());
+        }
+        return erg;
+    }
+    public SatzEMail getOneEMail(long id)
+    {
+       	if (con == null) connect();
+    	SatzEMail erg = new SatzEMail();
+        ResultSet rs = null;
+        String sql = "select send,received,subject,typ,sfrom,sto,groesse";
+        sql += " from email";
+        sql += " where send = ?";
+        try 
+        {
+            stmt = con.prepareStatement(sql);
+            stmt.setLong(1,id);
+            rs = stmt.executeQuery();
+            while (rs.next())
+            {
+            	erg.setSend(rs.getLong(1));
+            	erg.setReceived(rs.getLong(2));
+            	erg.setSubject(rs.getString(3));
+            	erg.setTyp(rs.getString(4));
+            	erg.setSfrom(rs.getLong(5));
+            	erg.setSto(rs.getLong(6));
+            	erg.setGroesse(rs.getInt(7));
+            }
+            rs.close();
+            stmt.close();
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("Postgres:getOneEMail:Exception:");
+            System.out.println(e.toString());
+        }
+        return erg;
+    }
+    public String getFromList(long id)
+    {
+       	if (con == null) connect();
+    	String erg = "";
+        ResultSet rs = null;
+        String sql = "select adresse";
+        sql += " from sfrom";
+        sql += " where id = ?";
+        try 
+        {
+            stmt = con.prepareStatement(sql);
+            stmt.setLong(1,id);
+            rs = stmt.executeQuery();
+            while (rs.next())
+            {
+            	erg += " " +rs.getString(1);
+            }
+            rs.close();
+            stmt.close();
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("Postgres:getFromList:Exception:");
+            System.out.println(e.toString());
+        }
+        return erg;
+    }
+    public String getToList(long id)
+    {
+       	if (con == null) connect();
+    	String erg = "";
+        ResultSet rs = null;
+        String sql = "select adresse";
+        sql += " from sto";
+        sql += " where id = ?";
+        try 
+        {
+            stmt = con.prepareStatement(sql);
+            stmt.setLong(1,id);
+            rs = stmt.executeQuery();
+            while (rs.next())
+            {
+            	erg += " " + rs.getString(1);
+            }
+            rs.close();
+            stmt.close();
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("Postgres:getToList:Exception:");
+            System.out.println(e.toString());
+        }
+        return erg;
+    }
+    public String getTags(long id)
+    {
+       	if (con == null) connect();
+    	String erg = "";
+        ResultSet rs = null;
+        String sql = "select tag";
+        sql += " from tags";
+        sql += " where email_id = ?";
+        try 
+        {
+            stmt = con.prepareStatement(sql);
+            stmt.setLong(1,id);
+            rs = stmt.executeQuery();
+            while (rs.next())
+            {
+            	erg += " " + rs.getString(1);
+            }
+            rs.close();
+            stmt.close();
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("Postgres:getTgs:Exception:");
             System.out.println(e.toString());
         }
         return erg;

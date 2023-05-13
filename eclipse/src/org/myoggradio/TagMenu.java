@@ -56,7 +56,8 @@ public class TagMenu extends JFrame implements ActionListener
 		Object quelle = ae.getSource();
 		if (quelle == butt1)
 		{
-			//
+			EinTagMenu etm = new EinTagMenu(tag);
+			etm.anzeigen();
 			dispose();
 		}
 	}

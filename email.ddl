@@ -30,6 +30,11 @@ CREATE TABLE public.tags (
     email_id bigint,
     tag varchar(255)
 );
+CREATE INDEX tags_i1
+    ON public.tags
+    (
+     tag
+    );
 create user email with password 'email';
 grant all on email to email;
 grant all on body to email;
