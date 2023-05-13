@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.mail.Address;
@@ -71,6 +72,36 @@ public class Postgres
     		System.out.println("Postgres:commit:Exception:");
     		System.out.println(e.toString());
     	}
+    }
+    public ArrayList<SatzTag> getAllTags()
+    {
+       	if (con == null) connect();
+    	ArrayList<SatzTag> erg = new ArrayList<SatzTag>();
+        ResultSet rs = null;
+        String sql = "select tag,count(*)";
+        sql += " from tags";
+        sql += " group by tag";
+        sql += " order by count(*) desc";
+        try 
+        {
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while (rs.next())
+            {
+            	SatzTag satz = new SatzTag();
+            	satz.setTag(rs.getString(1));
+            	satz.setAnzahl(rs.getInt(2));
+            	erg.add(satz);
+            }
+            rs.close();
+            stmt.close();
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("Postgres:getAllTags:Exception:");
+            System.out.println(e.toString());
+        }
+        return erg;
     }
     public String insertMessage(Message msg,ArrayList<String> tags)
     {

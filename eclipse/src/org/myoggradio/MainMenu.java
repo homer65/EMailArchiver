@@ -47,7 +47,9 @@ public class MainMenu extends JFrame implements ActionListener
 		}
 		if (quelle == butt2)
 		{
-			
+			ArchivVerarbeitung av = new ArchivVerarbeitung();
+			av.start();
+			dispose();
 		}
 	}
 }
