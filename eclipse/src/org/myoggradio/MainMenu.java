@@ -37,7 +37,7 @@ public class MainMenu extends JFrame implements ActionListener
 			{
 				Verarbeitung v = new Verarbeitung();
 				v.start();
-				dispose();
+				//dispose();
 			}
 			catch (Exception e)
 			{
@@ -49,7 +49,7 @@ public class MainMenu extends JFrame implements ActionListener
 		{
 			ArchivVerarbeitung av = new ArchivVerarbeitung();
 			av.start();
-			dispose();
+			//dispose();
 		}
 	}
 }
