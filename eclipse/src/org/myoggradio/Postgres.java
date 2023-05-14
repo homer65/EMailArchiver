@@ -220,10 +220,10 @@ public class Postgres
         }
         return erg;
     }
-    public String getToList(long id)
+    public ArrayList<String> getToList(long id)
     {
        	if (con == null) connect();
-    	String erg = "";
+    	ArrayList<String> erg = new ArrayList<String>();
         ResultSet rs = null;
         String sql = "select adresse";
         sql += " from sto";
@@ -235,7 +235,8 @@ public class Postgres
             rs = stmt.executeQuery();
             while (rs.next())
             {
-            	erg += " " + rs.getString(1);
+            	String sto = rs.getString(1);
+            	erg.add(sto);
             }
             rs.close();
             stmt.close();

@@ -8,6 +8,5 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="/home/christian/git/EMailArchiver/lib/activation-1.1.jar"/>
 	<classpathentry kind="lib" path="/home/christian/git/EMailArchiver/lib/javax.mail-1.6.2.jar"/>
-	<classpathentry kind="lib" path="/home/christian/git/EMailArchiver/lib/Pause.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

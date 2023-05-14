@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
@@ -31,7 +32,7 @@ public class EineEMailMenu extends JFrame implements ActionListener
 		Postgres postgres = new Postgres();
 		SatzEMail satz = postgres.getOneEMail(id);
 		String subject = satz.getSubject();
-		String tolist = postgres.getToList(satz.getSto());
+		ArrayList<String> tolist = postgres.getToList(satz.getSto());
 		String fromlist = postgres.getFromList(id);
 		String groesse = satz.getGroesse() + "";
 		String tags = postgres.getTags(id);
@@ -56,15 +57,17 @@ public class EineEMailMenu extends JFrame implements ActionListener
 		}
 		JLabel lab0 = new JLabel("Send: " + datum_s + " Received: " + datum_r);
 		JLabel lab1 = new JLabel("Subject: " +subject);
-		JLabel lab2 = new JLabel("To: " + tolist);
-		JLabel lab3 = new JLabel("From: " + fromlist);
+		JLabel lab3 = new JLabel("<= From: " + fromlist);
 		JLabel lab4 = new JLabel("Size: " +groesse);
 		JLabel lab5 = new JLabel("Typ: " + typ);
 		JPanel lpan = new JPanel();
-		lpan.setLayout(new GridLayout(6,1));
+		lpan.setLayout(new GridLayout(5 + tolist.size(),1));
 		lpan.add(lab0);
 		lpan.add(lab1);
-		lpan.add(lab2);
+		for (int i=0;i<tolist.size();i++)
+		{
+			lpan.add(new JLabel("=> To: " + tolist.get(i)));
+		}
 		lpan.add(lab3);
 		lpan.add(lab4);
 		lpan.add(lab5);
