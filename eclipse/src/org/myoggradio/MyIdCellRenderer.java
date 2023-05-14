@@ -9,6 +9,7 @@ import javax.swing.ListCellRenderer;
 public class MyIdCellRenderer extends JLabel implements ListCellRenderer<Long>
 {
 	private static final long serialVersionUID = 1L;
+	private Postgres postgres = new Postgres();
 	@Override
 	public Component getListCellRendererComponent(
 			JList<? extends Long> arg0, 
@@ -19,7 +20,6 @@ public class MyIdCellRenderer extends JLabel implements ListCellRenderer<Long>
 		String text = "Unkown";
 		try
 		{
-			Postgres postgres = new Postgres();
 			SatzEMail satz = postgres.getOneEMail(arg1);
 			text = satz.getSubject();
 		}
