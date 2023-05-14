@@ -1,6 +1,8 @@
 #!/bin/bash
 #
-SCRIPTPATH=$(cd `dirname $0` && pwd)
+SCRIPTPATH=/home/christian/git/EMailArchiver
+#SCRIPTPATH=$(cd `dirname $0` && pwd)
+cd ${SCRIPTPATH}
 echo $SCRIPTPATH
 for filename in ${SCRIPTPATH}/lib/*.jar
  do CLASSPATH=${CLASSPATH}:${filename}
