@@ -18,14 +18,29 @@ CREATE TABLE public.body (
     id bigint,
     wert bytea
 );
+CREATE UNIQUE INDEX body_i1
+    ON public.body
+    (
+     id
+    );
 CREATE TABLE public.sfrom (
     id bigint,
     adresse varchar(255)
 );
+CREATE INDEX sfrom_i1
+    ON public.sfrom
+    (
+     id
+    );
 CREATE TABLE public.sto (
     id bigint,
     adresse varchar(255)
 );
+CREATE INDEX sto_i1
+    ON public.sto
+    (
+     id
+    );
 CREATE TABLE public.tags (
     email_id bigint,
     tag varchar(255)
@@ -34,6 +49,11 @@ CREATE INDEX tags_i1
     ON public.tags
     (
      tag
+    );
+CREATE INDEX tags_i2
+    ON public.tags
+    (
+     email_id
     );
 create user email with password 'email';
 grant all on email to email;
