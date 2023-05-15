@@ -22,7 +22,7 @@ public class Verarbeitung extends Thread
 			Session session = Session.getDefaultInstance(props, null);
 			Store store = session.getStore("imaps");
 			store.connect(Parameter.mail_server,Parameter.mail_user,Parameter.mail_passwort);
-			folder = (IMAPFolder) store.getFolder("INBOX");
+			folder = (IMAPFolder) store.getFolder(Parameter.mail_folder);
 			ArrayList<IMAPFolder> alfolder = new ArrayList<IMAPFolder>();
 			addFolder(folder,alfolder);
 			FolderDialog fm = new FolderDialog(alfolder,this);
