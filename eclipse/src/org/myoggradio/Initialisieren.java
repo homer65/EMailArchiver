@@ -38,6 +38,7 @@ public class Initialisieren
 			if (feld.equals("mail_user")) Parameter.mail_user = wert;
 			if (feld.equals("mail_passwort")) Parameter.mail_passwort = wert;
 			if (feld.equals("mail_folder")) Parameter.mail_folder = wert;
+			if (feld.equals("mail_programm")) Parameter.mail_programm = wert;
 			if (feld.equals("pg_url")) Parameter.pg_url = wert;
 			if (feld.equals("pg_user")) Parameter.pg_user = wert;
 			if (feld.equals("pg_passwort")) Parameter.pg_passwort = wert;

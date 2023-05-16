@@ -126,7 +126,7 @@ public class EineMessageMenu extends JFrame implements ActionListener
 				OutputStream aus = new FileOutputStream(new File("/tmp/GetEMail.eml"));
 				msg.writeTo(aus);
 				aus.close();
-				ProcessBuilder builder = new ProcessBuilder("thunderbird","/tmp/GetEMail.eml"); 
+				ProcessBuilder builder = new ProcessBuilder(Parameter.mail_programm,"/tmp/GetEMail.eml"); 
 				builder.start();
 			}
 			catch (Exception e)

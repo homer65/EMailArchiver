@@ -110,7 +110,7 @@ public class EineEMailMenu extends JFrame implements ActionListener
 				}
 				aus.close();
 				ein.close();
-				ProcessBuilder builder = new ProcessBuilder("thunderbird","/tmp/GetEMail.eml"); 
+				ProcessBuilder builder = new ProcessBuilder(Parameter.mail_programm,"/tmp/GetEMail.eml"); 
 				builder.start();
 			}
 			catch (Exception e)
