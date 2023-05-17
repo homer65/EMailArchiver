@@ -34,7 +34,7 @@ public class EineMessageMenu extends JFrame implements ActionListener
 		this.msg = msg;
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		String subject = "unkown";
-		String tolist = "";
+		ArrayList<String> tolist = new ArrayList<String>();
 		String fromlist = "";
 		String groesse = "";
 		String datum_r = "";
@@ -50,7 +50,7 @@ public class EineMessageMenu extends JFrame implements ActionListener
 				if (adr instanceof InternetAddress)
 				{
 					InternetAddress iadr = (InternetAddress) adr;
-					tolist += iadr.getAddress() + ",";
+					tolist.add(iadr.getAddress());
 				}
 			}
 			Address[] from = msg.getFrom();
@@ -81,15 +81,19 @@ public class EineMessageMenu extends JFrame implements ActionListener
 		}
 		JLabel lab0 = new JLabel("Send: " + datum_s + " Received: " + datum_r);
 		JLabel lab1 = new JLabel("Subject: " +subject);
-		JLabel lab2 = new JLabel("To: " + tolist);
-		JLabel lab3 = new JLabel("From: " + fromlist);
+		//JLabel lab2 = new JLabel("To: " + tolist);
+		JLabel lab3 = new JLabel("<= From: " + fromlist);
 		JLabel lab4 = new JLabel("Size: " +groesse);
 		JLabel lab5 = new JLabel("Typ: " + typ);
 		JPanel lpan = new JPanel();
-		lpan.setLayout(new GridLayout(6,1));
+		lpan.setLayout(new GridLayout(tolist.size() + 5,1));
 		lpan.add(lab0);
 		lpan.add(lab1);
-		lpan.add(lab2);
+		for (int i=0;i<tolist.size();i++)
+		{
+			String sto = tolist.get(i);
+			lpan.add(new JLabel("=> To: " + sto));
+		}
 		lpan.add(lab3);
 		lpan.add(lab4);
 		lpan.add(lab5);
