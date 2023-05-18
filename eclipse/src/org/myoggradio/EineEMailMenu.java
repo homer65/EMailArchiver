@@ -101,7 +101,7 @@ public class EineEMailMenu extends JFrame implements ActionListener
 			{
 				Postgres postgres = new Postgres();
 				InputStream ein = postgres.getBody(id);
-				OutputStream aus = new FileOutputStream(new File("/tmp/GetEMail.eml"));
+				OutputStream aus = new FileOutputStream(new File(Parameter.mail_temp + "GetEMail.eml"));
 				int n = ein.read();
 				while (n >= 0)
 				{
@@ -110,7 +110,7 @@ public class EineEMailMenu extends JFrame implements ActionListener
 				}
 				aus.close();
 				ein.close();
-				ProcessBuilder builder = new ProcessBuilder(Parameter.mail_programm,"/tmp/GetEMail.eml"); 
+				ProcessBuilder builder = new ProcessBuilder(Parameter.mail_programm,Parameter.mail_temp + "GetEMail.eml"); 
 				builder.start();
 			}
 			catch (Exception e)

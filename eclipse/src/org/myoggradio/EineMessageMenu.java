@@ -127,10 +127,10 @@ public class EineMessageMenu extends JFrame implements ActionListener
 		{
 			try
 			{
-				OutputStream aus = new FileOutputStream(new File("/tmp/GetEMail.eml"));
+				OutputStream aus = new FileOutputStream(new File(Parameter.mail_temp + "GetEMail.eml"));
 				msg.writeTo(aus);
 				aus.close();
-				ProcessBuilder builder = new ProcessBuilder(Parameter.mail_programm,"/tmp/GetEMail.eml"); 
+				ProcessBuilder builder = new ProcessBuilder(Parameter.mail_programm,Parameter.mail_temp + "GetEMail.eml"); 
 				builder.start();
 			}
 			catch (Exception e)
