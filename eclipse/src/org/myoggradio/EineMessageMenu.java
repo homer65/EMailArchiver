@@ -11,13 +11,13 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.mail.Address;
+import javax.mail.Flags;
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
 public class EineMessageMenu extends JFrame implements ActionListener
@@ -161,6 +161,21 @@ public class EineMessageMenu extends JFrame implements ActionListener
 				{
 					System.out.println("Postgres returned: ");
 					System.out.println(erg);
+				}
+				else
+				{
+					if (Parameter.mail_delete.equals("true"))
+					{
+						try
+						{
+							msg.setFlag(Flags.Flag.DELETED,true);
+						}
+						catch (Exception e)
+						{
+							System.out.println("EineMessageMenu:actionPerformed:butt2:Exception:");
+							System.out.println(e.toString());
+						}
+					}
 				}
 				dispose();
 			}

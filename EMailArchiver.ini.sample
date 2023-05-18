@@ -4,6 +4,7 @@ mail_passwort=xxx=
 mail_folder=INBOX=
 mail_programm=thunderbird=
 mail_temp=/tmp/=
+mail_delete=true=
 pg_url=jdbc:postgresql://45.129.182.115:5432/email=
 pg_driver=org.postgresql.Driver=
 pg_user=email=

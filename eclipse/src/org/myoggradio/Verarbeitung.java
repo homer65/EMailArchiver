@@ -28,7 +28,7 @@ public class Verarbeitung extends Thread
 			FolderDialog fm = new FolderDialog(alfolder,this);
 			fm.anzeigen();
 			if (!folder.isOpen())
-				folder.open(Folder.READ_ONLY);
+				folder.open(Folder.READ_WRITE);
 			Message[] messages = folder.getMessages();
 			ArrayList<Message> al = new ArrayList<Message>();
 			for (int i=0;i<messages.length;i++)
@@ -36,7 +36,7 @@ public class Verarbeitung extends Thread
 				al.add(messages[i]);
 			}
 			al.sort(new MessageComparator());
-			MessageMenu mm = new MessageMenu(al);
+			MessageMenu mm = new MessageMenu(al,folder);
 			mm.anzeigen();
 		}
 		catch (Exception e)
