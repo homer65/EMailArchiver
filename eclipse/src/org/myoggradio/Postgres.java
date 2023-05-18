@@ -422,4 +422,41 @@ public class Postgres
 		close();
 		return erg;
     }
+    public String changeTags(long id,ArrayList<String> tags)
+    {
+    	String erg = null;
+    	if (con == null) connect();
+		try
+		{
+			String sql = "delete from tags where email_id = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setLong(1,id);
+			stmt.executeUpdate();
+			stmt.close();
+			for (int i=0;i<tags.size();i++)
+			{
+				String tag = tags.get(i);
+			   	sql = "insert into tags (";
+		    	sql += " email_id";
+		    	sql += ",tag";
+		     	sql += ")";
+		    	sql += " values (?,?)";
+	            stmt = con.prepareStatement(sql);
+	            stmt.setLong(1,id);
+	            stmt.setString(2,tag);
+	            stmt.executeUpdate();
+	            stmt.close();
+			}
+			con.commit();
+		}
+		catch (Exception e)
+		{
+			System.out.println("Postgres:changeTags:Exception:");
+			System.out.println(e.toString());
+			erg = e.toString();
+			rollback();
+		}
+		close();
+		return erg;
+    }   
 }

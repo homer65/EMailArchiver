@@ -17,11 +17,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 public class EineEMailMenu extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	private JButton butt1 = new JButton("Show");
-	private JLabel tf1 = new JLabel();
+	private JButton butt2 = new JButton("Change Tag");
+	private JTextField tf1 = new JTextField();
 	private JLabel ltf1 = new JLabel("Tags ");
 	private long id = 0;
 	public EineEMailMenu(long id)
@@ -72,8 +74,9 @@ public class EineEMailMenu extends JFrame implements ActionListener
 		lpan.add(lab4);
 		lpan.add(lab5);
 		JPanel bpan = new JPanel();
-		bpan.setLayout(new GridLayout(1,1));
+		bpan.setLayout(new GridLayout(1,2));
 		bpan.add(butt1);
+		bpan.add(butt2);
 		JPanel tpan = new JPanel();
 		tpan.setLayout(new BorderLayout());
 		tpan.add(ltf1,BorderLayout.WEST);
@@ -84,6 +87,7 @@ public class EineEMailMenu extends JFrame implements ActionListener
 		cpan.add(tpan,BorderLayout.CENTER);
 		cpan.add(bpan,BorderLayout.SOUTH);
 		butt1.addActionListener(this);
+		butt2.addActionListener(this);
 		setContentPane(cpan);
 	}
 	public void anzeigen()
@@ -117,6 +121,35 @@ public class EineEMailMenu extends JFrame implements ActionListener
 			{
 				System.out.println("EineEMailMenu:butt1:");
 				System.out.println(e.toString());
+			}
+		}
+		if (quelle == butt2)
+		{
+			String tags = tf1.getText();
+			if (tags == null) tags = "";
+			String[] worte = tags.split(" ");
+			ArrayList<String> altags = new ArrayList<String>();
+			for (int i=0;i<worte.length;i++)
+			{
+				String tag = worte[i].toLowerCase();
+				if (!tag.equals(""))
+				{
+					altags.add(tag);
+				}
+			}
+			if (altags.size() > 0)
+			{
+				Postgres postgres = new Postgres();
+				String erg = postgres.changeTags(id,altags);
+				if (erg != null)
+				{
+					System.out.println("Postgres returned: ");
+					System.out.println(erg);
+				}
+			}
+			else
+			{
+				System.out.println("Mindestens einen Tag vorgeben");
 			}
 		}
 	}
