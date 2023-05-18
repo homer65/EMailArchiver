@@ -12,7 +12,7 @@ public class MainMenu extends JFrame implements ActionListener
 	private JButton butt2 = new JButton("Show Archived");
 	public MainMenu()
 	{
-		super("Main Menu");
+		super("Main Menu " + Parameter.version);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JPanel cpan = new JPanel();
 		cpan.setLayout(new GridLayout(1,2));
