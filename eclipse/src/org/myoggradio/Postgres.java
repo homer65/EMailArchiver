@@ -40,6 +40,7 @@ public class Postgres
             {
                 Class.forName(driver);
                 con = DriverManager.getConnection(url, benutzer, passwort);
+                con.setAutoCommit(false);
             } 
             catch (Exception e) 
             {
@@ -74,6 +75,19 @@ public class Postgres
     		System.out.println(e.toString());
     	}
     }
+    public void rollback()
+    {
+   		System.out.println("Postgres:rollback:Will do Rollback:");
+    	try
+    	{
+    		con.rollback();
+    	}
+    	catch (Exception e)
+    	{
+    		System.out.println("Postgres:rollback:Exception:");
+    		System.out.println(e.toString());
+    	}
+    }
     public ArrayList<SatzTag> getAllTags()
     {
        	if (con == null) connect();
@@ -96,11 +110,13 @@ public class Postgres
             }
             rs.close();
             stmt.close();
+            commit();
         } 
         catch (Exception e) 
         {
             System.out.println("Postgres:getAllTags:Exception:");
             System.out.println(e.toString());
+            rollback();
         }
         return erg;
     }
@@ -123,11 +139,13 @@ public class Postgres
             }
             rs.close();
             stmt.close();
+            commit();
         } 
         catch (Exception e) 
         {
             System.out.println("Postgres:getBody:Exception:");
             System.out.println(e.toString());
+            rollback();
         }
         return erg;
     }
@@ -152,11 +170,13 @@ public class Postgres
             }
             rs.close();
             stmt.close();
+            commit();
         } 
         catch (Exception e) 
         {
             System.out.println("Postgres:getOneTag:Exception:");
             System.out.println(e.toString());
+            rollback();
         }
         return erg;
     }
@@ -185,11 +205,13 @@ public class Postgres
             }
             rs.close();
             stmt.close();
+            commit();
         } 
         catch (Exception e) 
         {
             System.out.println("Postgres:getOneEMail:Exception:");
             System.out.println(e.toString());
+            rollback();
         }
         return erg;
     }
@@ -212,11 +234,13 @@ public class Postgres
             }
             rs.close();
             stmt.close();
+            commit();
         } 
         catch (Exception e) 
         {
             System.out.println("Postgres:getFromList:Exception:");
             System.out.println(e.toString());
+            rollback();
         }
         return erg;
     }
@@ -240,11 +264,13 @@ public class Postgres
             }
             rs.close();
             stmt.close();
+            commit();
         } 
-        catch (Exception e) 
+        catch (Exception e)
         {
             System.out.println("Postgres:getToList:Exception:");
             System.out.println(e.toString());
+            rollback();
         }
         return erg;
     }
@@ -267,11 +293,13 @@ public class Postgres
             }
             rs.close();
             stmt.close();
+            commit();
         } 
         catch (Exception e) 
         {
             System.out.println("Postgres:getTgs:Exception:");
             System.out.println(e.toString());
+            rollback();
         }
         return erg;
     }
@@ -389,15 +417,7 @@ public class Postgres
 			System.out.println("Postgres:insertMessage:Exception:");
 			System.out.println(e.toString());
 			erg = e.toString();
-			try
-			{
-				con.rollback();
-			}
-			catch (Exception ex)
-			{
-				System.out.println("Postgres:insertMessage:rollback:Exception:");
-				System.out.println(e.toString());
-			}
+			rollback();
 		}
 		close();
 		return erg;
