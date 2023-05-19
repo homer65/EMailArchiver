@@ -215,6 +215,41 @@ public class Postgres
         }
         return erg;
     }
+    public ArrayList<SatzEMail> searchEMailSubject(String search)
+    {
+       	if (con == null) connect();
+       	ArrayList<SatzEMail> erg = new ArrayList<SatzEMail>();
+       	ArrayList<Long> ids = new ArrayList<Long>();
+        ResultSet rs = null;
+        String sql = "select send";
+        sql += " from email";
+        sql += " where subject like ?";
+        try 
+        {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1,"%" + search + "%");
+            rs = stmt.executeQuery();
+            while (rs.next())
+            {
+            	ids.add(rs.getLong(1));
+            }
+            rs.close();
+            stmt.close();
+            for (int i=0;i<ids.size();i++)
+            {
+            	SatzEMail satz = getOneEMail(ids.get(i));
+            	erg.add(satz);
+            }
+            commit();
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("Postgres:searchEMailSubject:Exception:");
+            System.out.println(e.toString());
+            rollback();
+        }
+        return erg;
+    }
     public String getFromList(long id)
     {
        	if (con == null) connect();
