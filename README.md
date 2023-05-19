@@ -1,8 +1,15 @@
 # EMailArchiver
 Eine einfache Möglichkeit einzelne EMails zu archivieren.
-So der Plan.
-Erste EMail wurde archiviert.
-Es gibt einen AuswahlDialog fuer Folder.
-Es gibt eine einfache Oberfläche um sich die archivierten EMails anzuschauen.
-Man kann aber keine Aenderung an archivierten EMail vornehmen.
+Von einem IMAP Server werden EMail abgerufen und können in einer
+POSTGRES Datenbank gespeichert werden.
+Hinweise zur Installation:
+(1) Java mindestens Version 11 sollte installiert sein
+(2) git clone https://github.com/homer65/EMailArchiver,git
+(3) EMailArchiver.ini.sample nach EMailArchiver.ini kopieren und anpassen
+(4) email.ddl in Postgres ausführen. Vorher Passwort anpassen.
+(5) Programm mit Start Skript ausführen
+    EMailArchiver.sh für Linux
+    EMailArchiver.ps1 für Windows
+(6) Wenn Fehler auftreten oder Verbesserungsvorschläge da sind,
+    EMail an christian@myoggradio.org
 
