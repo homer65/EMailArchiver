@@ -429,7 +429,7 @@ public class Postgres
 	            stmt.executeUpdate();
 	            stmt.close();
 			}
-			File file = new File("/tmp/GetEMail.eml");
+			File file = new File(Parameter.mail_temp + "GetEMail.eml");
 			OutputStream aus = new FileOutputStream(file);
 			msg.writeTo(aus);
 			aus.close();
