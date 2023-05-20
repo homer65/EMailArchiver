@@ -38,9 +38,9 @@ public class Postgres
         {
             try
             {
-                Class.forName(driver);
-                con = DriverManager.getConnection(url, benutzer, passwort);
-                con.setAutoCommit(false);
+            	Class.forName(driver);
+            	con = DriverManager.getConnection(url, benutzer, passwort);
+            	con.setAutoCommit(false);
             } 
             catch (Exception e) 
             {

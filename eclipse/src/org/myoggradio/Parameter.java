@@ -2,7 +2,7 @@ package org.myoggradio;
 
 public class Parameter 
 {
-	public static String version = "Version 0.06 19.05.2023";
+	public static String version = "Version 0.07 20.05.2023";
 	public static String mail_server = "";
 	public static String mail_user = "";
 	public static String mail_passwort = "";
