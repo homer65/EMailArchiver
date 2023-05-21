@@ -38,3 +38,7 @@ Hinweise zur Installation für Postgres:
 (6) Wenn Fehler auftreten oder Verbesserungsvorschläge da sind,
     EMail an christian@myoggradio.org
 
+
+Und für Alle: Regelmäßige Backups nicht vergessen.
+
+
