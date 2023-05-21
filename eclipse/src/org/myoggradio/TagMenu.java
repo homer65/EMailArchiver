@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
@@ -77,14 +78,18 @@ public class TagMenu extends JFrame implements ActionListener
 					String x = tag.substring(0,1);
 					if (x.equals("#"))
 					{
-						Postgres postgres = new Postgres();
-						ArrayList<Long> ids = postgres.getOneTag(tag);
-						for (int i=0;i<ids.size();i++)
+						int rc = JOptionPane.showConfirmDialog(this, "Wirklich loeschen", "",JOptionPane.YES_NO_OPTION);
+						if(rc == 0) // Yes
 						{
-							long id = ids.get(i);
-							postgres.deleteMessage(id);
+							Postgres postgres = new Postgres();
+							ArrayList<Long> ids = postgres.getOneTag(tag);
+							for (int i=0;i<ids.size();i++)
+							{
+								long id = ids.get(i);
+								postgres.deleteMessage(id);
+							}
+							donedelete = true;
 						}
-						donedelete = true;
 					}
 					else
 					{
