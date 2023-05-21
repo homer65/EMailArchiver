@@ -12,4 +12,5 @@ pg_passwort=xxx=
 pg_db=email=
 sqlite=true=
 sqlite_url=jdbc:sqlite:EMailArchiver.db
+export_folder=/home/christian/email/=
 

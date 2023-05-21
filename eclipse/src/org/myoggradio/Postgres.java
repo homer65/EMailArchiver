@@ -129,6 +129,33 @@ public class Postgres
         }
         return erg;
     }
+    public ArrayList<Long> getAllId()
+    {
+    	if (con == null) connect();
+    	ArrayList<Long> erg = new ArrayList<Long>();
+    	ResultSet rs = null;
+    	String sql = "select send from email order by send desc";
+    	try
+    	{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while (rs.next())
+            {
+            	long id = rs.getLong(1);
+            	erg.add(id);
+            }
+            rs.close();
+            stmt.close();
+            commit();
+    	}
+    	catch (Exception e)
+    	{
+            System.out.println("Postgres:getAllId:Exception:");
+            System.out.println(e.toString());
+            rollback();
+    	}
+    	return erg;
+    }
     public InputStream getBody(long id)
     {
        	if (con == null) connect();

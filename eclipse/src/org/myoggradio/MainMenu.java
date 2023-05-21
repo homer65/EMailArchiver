@@ -12,20 +12,23 @@ public class MainMenu extends JFrame implements ActionListener
 	private JButton butt1 = new JButton("Show EMail");
 	private JButton butt2 = new JButton("Show Archived");
 	private JButton butt3 = new JButton("Search Archived");
+	private JButton butt4 = new JButton("Export to Folder");
 	public MainMenu()
 	{
 		super("Main Menu " + Parameter.version);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JPanel cpan = new JPanel();
-		cpan.setLayout(new GridLayout(3,1));
+		cpan.setLayout(new GridLayout(4,1));
 		cpan.add(butt1);
 		cpan.add(butt2);
 		cpan.add(butt3);
+		cpan.add(butt4);
 		butt1.addActionListener(this);
 		butt2.addActionListener(this);
 		butt3.addActionListener(this);
+		butt4.addActionListener(this);
 		setContentPane(cpan);
-		this.setPreferredSize(new Dimension(400,150));
+		this.setPreferredSize(new Dimension(400,200));
 	}
 	public void anzeigen()
 	{
@@ -60,6 +63,11 @@ public class MainMenu extends JFrame implements ActionListener
 		{
 			SearchMenu sm = new SearchMenu();
 			sm.anzeigen();
+		}
+		if (quelle == butt4)
+		{
+			FileExport export = new FileExport();
+			export.start();
 		}
 	}
 }

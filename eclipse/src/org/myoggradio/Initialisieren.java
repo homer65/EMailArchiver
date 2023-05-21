@@ -46,6 +46,7 @@ public class Initialisieren
 			if (feld.equals("pg_driver")) Parameter.pg_driver = wert;
 			if (feld.equals("sqlite")) Parameter.sqlite = wert;
 			if (feld.equals("sqlite_url")) Parameter.sqlite_url = wert;
+			if (feld.equals("export_folder")) Parameter.export_folder = wert;
 		}
 	}
 }
