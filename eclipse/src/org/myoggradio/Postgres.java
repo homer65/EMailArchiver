@@ -380,18 +380,28 @@ public class Postgres
     	if (con == null) connect();
  		String subject = "unkown";
 		String typ = "";
+		String sql = "0";
 		try
 		{
-		   	con.setAutoCommit(false);
+		   	sql = "1";
 			subject = msg.getSubject();
+		   	sql = "2";
 			int igroesse = msg.getSize();
+		   	sql = "3";
 			Date date_r = msg.getReceivedDate();
+		   	sql = "4";
+		   	if (date_r == null) date_r = new Date();
 			long received = date_r.getTime();
+		   	sql = "5";
 			Date date_s = msg.getReceivedDate();
+		   	sql = "6";
+		   	if (date_s == null) date_s = new Date();
 			long send = date_s.getTime();
+		   	sql = "7";
 			typ += msg.getContentType();
+		   	sql = "8";
 			//
-		   	String sql = "insert into email (";
+		   	sql = "insert into email (";
 	    	sql += " send";
 	    	sql += ",received";
 	    	sql += ",subject";
@@ -496,10 +506,10 @@ public class Postgres
 		{
 			System.out.println("Postgres:insertMessage:Exception:");
 			System.out.println(e.toString());
+			System.out.println(sql);
 			erg = e.toString();
 			rollback();
 		}
-		close();
 		return erg;
     }
     public String changeTags(long id,ArrayList<String> tags)

@@ -47,6 +47,7 @@ public class Initialisieren
 			if (feld.equals("sqlite")) Parameter.sqlite = wert;
 			if (feld.equals("sqlite_url")) Parameter.sqlite_url = wert;
 			if (feld.equals("export_folder")) Parameter.export_folder = wert;
+			if (feld.equals("import_folder")) Parameter.import_folder = wert;
 		}
 	}
 }

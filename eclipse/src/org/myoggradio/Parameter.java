@@ -2,7 +2,7 @@ package org.myoggradio;
 
 public class Parameter 
 {
-	public static String version = "Version 0.11 21.05.2023";
+	public static String version = "Version 0.13 21.05.2023";
 	public static String mail_server = "";
 	public static String mail_user = "";
 	public static String mail_passwort = "";
@@ -17,4 +17,5 @@ public class Parameter
 	public static String sqlite = "false";
 	public static String sqlite_url = "jdbc:sqlite:EMailArchiver.db";
 	public static String export_folder = "/home/christian/email/";
+	public static String import_folder = "/home/christian/email/";
 }

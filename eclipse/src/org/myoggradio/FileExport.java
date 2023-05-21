@@ -21,13 +21,14 @@ public class FileExport extends Thread
 				InputStream ein = postgres.getBody(id);
 				String filename = Parameter.export_folder + id + ".eml";
  				File file = new File(filename);
+ 				byte[] buffer = new byte[8192];
  				System.out.println("Will write to: " + filename);
 				OutputStream aus = new FileOutputStream(file);
-				int x = ein.read();
-				while (x >= 0)
+				int n = ein.read(buffer);
+				while (n >= 0)
 				{
-					aus.write(x);
-					x = ein.read();
+					aus.write(buffer,0,n);
+					n = ein.read(buffer);
 				}
 				aus.close();
 				ein.close();
