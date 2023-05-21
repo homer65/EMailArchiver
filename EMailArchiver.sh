@@ -9,5 +9,6 @@ done
 echo $CLASSPATH
 export CLASSPATH
 java -Xmx1024M -Xms512M org.myoggradio.Main
+echo 'Press Enter'
 read dummy
 exit
