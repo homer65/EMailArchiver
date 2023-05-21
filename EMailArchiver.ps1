@@ -13,4 +13,4 @@ $Lib = $Dir + "\dll\"
 $Env:PATH = $Env:PATH + ";" + $Lib
 #
 java -Xmx4096M -Xms1280M org.myoggradio.Main
-Read-Host -Prompt "Press any Key"
+Read-Host -Prompt "Press Enter"
