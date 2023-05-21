@@ -10,4 +10,6 @@ pg_driver=org.postgresql.Driver=
 pg_user=email=
 pg_passwort=xxx=
 pg_db=email=
+sqlite=true=
+sqlite_url=jdbc:sqlite://home/christian/git/EMailArchiver/EMailArchiver.db
 

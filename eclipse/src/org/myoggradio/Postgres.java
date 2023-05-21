@@ -38,9 +38,18 @@ public class Postgres
         {
             try
             {
-            	Class.forName(driver);
-            	con = DriverManager.getConnection(url, benutzer, passwort);
-            	con.setAutoCommit(false);
+            	if (Parameter.sqlite.equals("true"))
+            	{
+	            	Class.forName("org.sqlite.JDBC");
+	            	con = DriverManager.getConnection(Parameter.sqlite_url);
+	            	con.setAutoCommit(false);
+            	}
+            	else
+            	{
+	            	Class.forName(driver);
+	            	con = DriverManager.getConnection(url, benutzer, passwort);
+	            	con.setAutoCommit(false);
+            	}
             } 
             catch (Exception e) 
             {
@@ -433,7 +442,7 @@ public class Postgres
 			OutputStream aus = new FileOutputStream(file);
 			msg.writeTo(aus);
 			aus.close();
-			FileInputStream ein = new FileInputStream(file);
+			InputStream ein = new FileInputStream(file);
 		   	sql = "insert into body (";
 	    	sql += " id";
 	    	sql += ",wert";
@@ -441,7 +450,16 @@ public class Postgres
 	    	sql += " values (?,?)";
             stmt = con.prepareStatement(sql);
             stmt.setLong(1,send);
-			stmt.setBinaryStream(2,ein,file.length());
+           	if (Parameter.sqlite.equals("true"))
+        	{
+           		byte[] bytes = new byte[(int)file.length()];
+           		bytes = ein.readAllBytes();
+           		stmt.setBytes(2,bytes);
+        	}
+           	else
+           	{
+           		stmt.setBinaryStream(2,ein,file.length());
+           	}
             stmt.executeUpdate();
             stmt.close();
             ein.close();
