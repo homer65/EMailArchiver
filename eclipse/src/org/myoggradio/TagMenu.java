@@ -69,6 +69,7 @@ public class TagMenu extends JFrame implements ActionListener
 		}
 		if (quelle == butt2)
 		{
+			boolean donedelete = false;
 			if (tag != null)
 			{
 				if (tag.length() > 1)
@@ -83,6 +84,7 @@ public class TagMenu extends JFrame implements ActionListener
 							long id = ids.get(i);
 							postgres.deleteMessage(id);
 						}
+						donedelete = true;
 					}
 					else
 					{
@@ -97,6 +99,12 @@ public class TagMenu extends JFrame implements ActionListener
 			else
 			{
 				System.out.println("Bitte ein Tag anklicken");
+			}
+			if (donedelete)
+			{
+				ArchivVerarbeitung av = new ArchivVerarbeitung();
+				av.start();
+				dispose();
 			}
 		}
 	}
