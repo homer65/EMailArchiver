@@ -374,7 +374,7 @@ public class Postgres
         }
         return erg;
     }
-    public String insertMessage(Message msg,ArrayList<String> tags)
+    public String insertMessage(Message msg,ArrayList<String> tags,long optionsend)
     {
     	String erg = null;
     	if (con == null) connect();
@@ -390,12 +390,20 @@ public class Postgres
 		   	sql = "3";
 			Date date_r = msg.getReceivedDate();
 		   	sql = "4";
-		   	if (date_r == null) date_r = new Date();
+		   	if (date_r == null)
+		   	{
+		   		if (optionsend == 0) date_r = new Date();
+		   		else date_r = new Date(optionsend);
+		   	}
 			long received = date_r.getTime();
 		   	sql = "5";
 			Date date_s = msg.getReceivedDate();
 		   	sql = "6";
-		   	if (date_s == null) date_s = new Date();
+		   	if (date_s == null)
+		   	{
+		   		if (optionsend == 0) date_s = new Date();
+		   		else date_s = new Date(optionsend);
+		   	}
 			long send = date_s.getTime();
 		   	sql = "7";
 			typ += msg.getContentType();
@@ -512,6 +520,47 @@ public class Postgres
 		}
 		return erg;
     }
+    public void deleteMessage(long id)
+    {
+    	String sql = "unkown";
+    	if (con == null) connect();
+		try
+		{
+			sql = "delete from tags where email_id = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setLong(1,id);
+			stmt.executeUpdate();
+			stmt.close();
+			sql = "delete from email where send = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setLong(1,id);
+			stmt.executeUpdate();
+			stmt.close();
+			sql = "delete from sto where id = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setLong(1,id);
+			stmt.executeUpdate();
+			stmt.close();
+			sql = "delete from sfrom where id = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setLong(1,id);
+			stmt.executeUpdate();
+			stmt.close();
+			sql = "delete from body where id = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setLong(1,id);
+			stmt.executeUpdate();
+			stmt.close();
+			con.commit();
+		}
+		catch (Exception e)
+		{
+			System.out.println("Postgres:deleteMessage:Exception:");
+			System.out.println(e.toString());
+			System.out.println(sql);
+			rollback();
+		}
+    }
     public String changeTags(long id,ArrayList<String> tags)
     {
     	String erg = null;
@@ -546,7 +595,6 @@ public class Postgres
 			erg = e.toString();
 			rollback();
 		}
-		close();
 		return erg;
     }   
 }

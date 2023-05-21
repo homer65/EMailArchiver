@@ -29,7 +29,8 @@ public class FileImport extends Thread
 	            ein.close();
 		        ArrayList<String> tags = new ArrayList<String>();
 		        tags.add("#imported");
-				postgres.insertMessage(message,tags);
+				long nummer = getNummer(file.getName());
+				postgres.insertMessage(message,tags,nummer);
 			}
 			catch (Exception e)
 			{
@@ -38,5 +39,35 @@ public class FileImport extends Thread
 			}
 		}
 		System.out.println("FileImport:run:beendet");
+	}
+	public long getNummer(String name)
+	{
+		long erg = 0;
+		String sl = "";
+		for (int i=0;i<name.length();i++)
+		{
+			String x = name.substring(i,i+1);
+			if (isDigit(x)) sl += x;
+		}
+		if (sl.length() > 11)
+		{
+			erg = Long.parseLong(sl);
+		}
+		return erg;
+	}
+	public boolean isDigit(String x)
+	{
+		boolean erg = false;
+		if (x.equals("0")) erg = true;
+		else if (x.equals("1")) erg = true;
+		else if (x.equals("2")) erg = true;
+		else if (x.equals("3")) erg = true;
+		else if (x.equals("4")) erg = true;
+		else if (x.equals("5")) erg = true;
+		else if (x.equals("6")) erg = true;
+		else if (x.equals("7")) erg = true;
+		else if (x.equals("8")) erg = true;
+		else if (x.equals("9")) erg = true;
+		return erg;
 	}
 }

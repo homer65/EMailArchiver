@@ -156,7 +156,7 @@ public class EineMessageMenu extends JFrame implements ActionListener
 			if (altags.size() > 0)
 			{
 				Postgres postgres = new Postgres();
-				String erg = postgres.insertMessage(msg,altags);
+				String erg = postgres.insertMessage(msg,altags,0);
 				if (erg != null)
 				{
 					System.out.println("Postgres returned: ");
