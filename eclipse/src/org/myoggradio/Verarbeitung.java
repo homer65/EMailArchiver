@@ -27,17 +27,20 @@ public class Verarbeitung extends Thread
 			addFolder(folder,alfolder);
 			FolderDialog fm = new FolderDialog(alfolder,this);
 			fm.anzeigen();
-			if (!folder.isOpen())
-				folder.open(Folder.READ_WRITE);
-			Message[] messages = folder.getMessages();
-			ArrayList<Message> al = new ArrayList<Message>();
-			for (int i=0;i<messages.length;i++)
+			if (folder != null)
 			{
-				al.add(messages[i]);
+				if (!folder.isOpen())
+					folder.open(Folder.READ_WRITE);
+				Message[] messages = folder.getMessages();
+				ArrayList<Message> al = new ArrayList<Message>();
+				for (int i=0;i<messages.length;i++)
+				{
+					al.add(messages[i]);
+				}
+				al.sort(new MessageComparator());
+				MessageMenu mm = new MessageMenu(al,folder);
+				mm.anzeigen();
 			}
-			al.sort(new MessageComparator());
-			MessageMenu mm = new MessageMenu(al,folder);
-			mm.anzeigen();
 		}
 		catch (Exception e)
 		{

@@ -3,11 +3,12 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,7 +24,16 @@ public class FolderDialog extends JDialog implements ActionListener
 	{
 		this.setModal(true);
 		this.setTitle("FolderDialog");
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		// this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter()
+		{
+            public void windowClosing(WindowEvent we)
+            {
+        		verarbeitung.setFolder(null);
+                dispose();
+            }
+        });
+		verarbeitung.setFolder(null);
 		IMAPFolder[] folders = new IMAPFolder[alfolder.size()];
 		for (int i=0;i<alfolder.size();i++)
 		{
