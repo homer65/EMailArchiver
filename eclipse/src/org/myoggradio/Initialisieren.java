@@ -26,6 +26,8 @@ public class Initialisieren
 			System.out.println("Initialisieren:start:Exception:");
 			System.out.println(e.toString());
 		}
+		Parameter parameter = new Parameter();
+		parameter.print();
 	}
 	public void parse(String satz)
 	{
