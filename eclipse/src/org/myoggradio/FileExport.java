@@ -2,8 +2,10 @@ package org.myoggradio;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Writer;
 import java.util.ArrayList;
 
 public class FileExport extends Thread 
@@ -32,6 +34,13 @@ public class FileExport extends Thread
 				}
 				aus.close();
 				ein.close();
+				String tags = postgres.getTags(id);
+				String filename2 = Parameter.export_folder + id + ".tag";
+				File file2 = new File(filename2);
+				System.out.println("Will write to: " + filename2);
+				Writer wrt = new FileWriter(file2);
+				wrt.write(tags);
+				wrt.close();
 			}
 			catch (Exception e)
 			{

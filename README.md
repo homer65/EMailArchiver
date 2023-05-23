@@ -72,6 +72,6 @@ pg_passwort - Nur für Postgres. Passwort obigen Users. Default: email
 
 export_folder - Ordner in den EMail beim Export geschrieben werden
 
-import_folder - Ordner aus dem EMail beim Import gelesen werden. Achtung: es werden alle Dateien in dem Ordner eingelesen!
+import_folder - Ordner aus dem EMail beim Import gelesen werden. Achtung: es werden nur *.eml  eingelesen und um *.tag ergänzt!
 
 
