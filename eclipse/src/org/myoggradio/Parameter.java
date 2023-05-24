@@ -2,7 +2,7 @@ package org.myoggradio;
 
 public class Parameter 
 {
-	public static String version = "Version 0.19 24.05.2023";
+	public static String version = "Version 0.20 24.05.2023";
 	public static String mail_server = "";
 	public static String mail_user = "";
 	public static String mail_passwort = "";
@@ -18,6 +18,7 @@ public class Parameter
 	public static String sqlite_url = "jdbc:sqlite:EMailArchiver.db";
 	public static String export_folder = "/home/christian/email/";
 	public static String import_folder = "/home/christian/email/";
+	public static String import_delete = "false";
 	public void print()
 	{
 		System.out.println("mail_server=" + mail_server + "=");
@@ -33,5 +34,6 @@ public class Parameter
 		System.out.println("sqlite_url=" + sqlite_url + "=");
 		System.out.println("exort_folder=" + export_folder + "=");
 		System.out.println("import_folder=" + import_folder + "=");
+		System.out.println("import_delete=" + import_delete + "=");
 	}
 }

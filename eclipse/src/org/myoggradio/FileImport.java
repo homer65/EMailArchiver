@@ -33,12 +33,13 @@ public class FileImport extends Thread
 		            MimeMessage message = new MimeMessage(mailSession,ein);
 		            ein.close();
 	            	ArrayList<String> altag = new ArrayList<String>();
+	            	String tpfad = "";
 		            try
 		            {
 		            	int n = pfad.length();
-		            	pfad = pfad.substring(0,n-4) + ".tag";
-						System.out.println("Will extrakt Tag from: " + pfad);
-		            	File tfile = new File(pfad);
+		            	tpfad = pfad.substring(0,n-4) + ".tag";
+						System.out.println("Will extrakt Tag from: " + tpfad);
+		            	File tfile = new File(tpfad);
 		            	BufferedReader br = new BufferedReader(new FileReader(tfile));
 		            	String tags = br.readLine();
 		            	tags = tags.trim();
@@ -64,6 +65,11 @@ public class FileImport extends Thread
 			        altag.add("#imported");
 					long nummer = getNummer(file.getName());
 					postgres.insertMessage(message,altag,nummer);
+					if (Parameter.import_delete.equals("true"))
+					{
+						new File(tpfad).delete();
+						new File(pfad).delete();
+					}
 				}
 			}
 			catch (Exception e)

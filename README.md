@@ -74,4 +74,6 @@ export_folder - Ordner in den EMail beim Export geschrieben werden
 
 import_folder - Ordner aus dem EMail beim Import gelesen werden. Achtung: es werden nur *.eml  eingelesen und um *.tag ergänzt!
 
+import_delete - Löscht die EMail nach einem Import Versuch aus dem Filesystem wenn true
+
 
