@@ -10,72 +10,81 @@ import java.util.Properties;
 
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
+import javax.swing.JFileChooser;
 
 public class FileImport extends Thread 
 {
 	public void run()
 	{
 		Protokol.write("FileImport:run:gestartet");
-		File[] files = new File(Parameter.import_folder).listFiles();
-		Postgres postgres = new Postgres();
-		for (int i=0;i<files.length;i++)
+		JFileChooser chooser = new JFileChooser();
+		chooser.setCurrentDirectory(new File(Parameter.import_folder));
+		chooser.setDialogTitle("Import Directory auswählen");
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{
-			try
+			Parameter.import_folder = chooser.getSelectedFile().getAbsolutePath();
+			File[] files = new File(Parameter.import_folder).listFiles();
+			Postgres postgres = new Postgres();
+			for (int i=0;i<files.length;i++)
 			{
-				File file = files[i];
-				if (isEML(file))
+				try
 				{
-					String pfad = file.getAbsolutePath();
-					System.out.println("Will read from: " + pfad);
-					InputStream ein = new FileInputStream(pfad);
-					Properties props = new Properties();
-		            Session mailSession = Session.getDefaultInstance(props, null);
-		            MimeMessage message = new MimeMessage(mailSession,ein);
-		            ein.close();
-	            	ArrayList<String> altag = new ArrayList<String>();
-	            	String tpfad = "";
-		            try
-		            {
-		            	int n = pfad.length();
-		            	tpfad = pfad.substring(0,n-4) + ".tag";
-						System.out.println("Will extrakt Tag from: " + tpfad);
-		            	File tfile = new File(tpfad);
-		            	BufferedReader br = new BufferedReader(new FileReader(tfile));
-		            	String tags = br.readLine();
-		            	tags = tags.trim();
-		            	br.close();
-		            	String[] worte = tags.split(" ");
-		            	for (int j=0;j<worte.length;j++)
-		            	{
-		            		String tag = worte[j];
-		            		if (tag.length() > 0)
-		            		{
-			            		if (!tag.substring(0,1).equals("#"))
-			            		{
-			            			altag.add(tag);
-			            		}
-		            		}
-		            	}
-		            }
-		            catch (Exception e)
-		            {
-						Protokol.write("FileImport:run:extraktTags:Exception:");
-						Protokol.write(e.toString());
-		            }
-			        altag.add("#imported");
-					long nummer = getNummer(file.getName());
-					postgres.insertMessage(message,altag,nummer);
-					if (Parameter.import_delete.equals("true"))
+					File file = files[i];
+					if (isEML(file))
 					{
-						new File(tpfad).delete();
-						new File(pfad).delete();
+						String pfad = file.getAbsolutePath();
+						System.out.println("Will read from: " + pfad);
+						InputStream ein = new FileInputStream(pfad);
+						Properties props = new Properties();
+			            Session mailSession = Session.getDefaultInstance(props, null);
+			            MimeMessage message = new MimeMessage(mailSession,ein);
+			            ein.close();
+		            	ArrayList<String> altag = new ArrayList<String>();
+		            	String tpfad = "";
+			            try
+			            {
+			            	int n = pfad.length();
+			            	tpfad = pfad.substring(0,n-4) + ".tag";
+							System.out.println("Will extrakt Tag from: " + tpfad);
+			            	File tfile = new File(tpfad);
+			            	BufferedReader br = new BufferedReader(new FileReader(tfile));
+			            	String tags = br.readLine();
+			            	tags = tags.trim();
+			            	br.close();
+			            	String[] worte = tags.split(" ");
+			            	for (int j=0;j<worte.length;j++)
+			            	{
+			            		String tag = worte[j];
+			            		if (tag.length() > 0)
+			            		{
+				            		if (!tag.substring(0,1).equals("#"))
+				            		{
+				            			altag.add(tag);
+				            		}
+			            		}
+			            	}
+			            }
+			            catch (Exception e)
+			            {
+							Protokol.write("FileImport:run:extraktTags:Exception:");
+							Protokol.write(e.toString());
+			            }
+				        altag.add("#imported");
+						long nummer = getNummer(file.getName());
+						postgres.insertMessage(message,altag,nummer);
+						if (Parameter.import_delete.equals("true"))
+						{
+							new File(tpfad).delete();
+							new File(pfad).delete();
+						}
 					}
 				}
-			}
-			catch (Exception e)
-			{
-				Protokol.write("FileImport:run:Exception:");
-				Protokol.write(e.toString());
+				catch (Exception e)
+				{
+					Protokol.write("FileImport:run:Exception:");
+					Protokol.write(e.toString());
+				}
 			}
 		}
 		Protokol.write("FileImport:run:beendet");
