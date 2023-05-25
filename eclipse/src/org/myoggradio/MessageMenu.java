@@ -24,13 +24,13 @@ public class MessageMenu extends JFrame
             {
             	try
             	{
-            		System.out.println("MessageMenu::windowClosing:Will close Folder");
+            		Protokol.write("MessageMenu::windowClosing:Will close Folder");
             		folder.close(true);
             	}
             	catch (Exception e)
             	{
-            		System.out.println("MessageMenu::windowClosing:Exception:");
-            		System.out.println(e.toString());
+            		Protokol.write("MessageMenu::windowClosing:Exception:");
+            		Protokol.write(e.toString());
             	}
                 dispose();
             }

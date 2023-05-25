@@ -36,7 +36,7 @@ public class SearchMenu extends JFrame implements ActionListener
 			String search = tf1.getText().trim();
 			if (search.equals(""))
 			{
-				System.out.println("Bitte Search String vorgeben");
+				Protokol.write("Bitte Search String vorgeben");
 			}
 			else
 			{

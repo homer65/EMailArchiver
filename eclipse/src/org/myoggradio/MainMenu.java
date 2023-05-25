@@ -52,8 +52,8 @@ public class MainMenu extends JFrame implements ActionListener
 			}
 			catch (Exception e)
 			{
-				System.out.println("MainMenu:actionPerformed:butt1:Exception");
-				System.out.println(e.toString());
+				Protokol.write("MainMenu:actionPerformed:butt1:Exception");
+				Protokol.write(e.toString());
 			}
 		}
 		if (quelle == butt2)

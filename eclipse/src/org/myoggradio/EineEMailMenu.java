@@ -54,8 +54,8 @@ public class EineEMailMenu extends JFrame implements ActionListener
 		}
 		catch (Exception e)
 		{
-			System.out.println("EineEMailMenu::Exception:");
-			System.out.println(e.toString());
+			Protokol.write("EineEMailMenu::Exception:");
+			Protokol.write(e.toString());
 		}
 		JLabel lab0 = new JLabel("Send: " + datum_s + " Received: " + datum_r);
 		JLabel lab1 = new JLabel("Subject: " +subject);
@@ -119,8 +119,8 @@ public class EineEMailMenu extends JFrame implements ActionListener
 			}
 			catch (Exception e)
 			{
-				System.out.println("EineEMailMenu:butt1:");
-				System.out.println(e.toString());
+				Protokol.write("EineEMailMenu:butt1:");
+				Protokol.write(e.toString());
 			}
 		}
 		if (quelle == butt2)
@@ -143,13 +143,13 @@ public class EineEMailMenu extends JFrame implements ActionListener
 				String erg = postgres.changeTags(id,altags);
 				if (erg != null)
 				{
-					System.out.println("Postgres returned: ");
-					System.out.println(erg);
+					Protokol.write("Postgres returned: ");
+					Protokol.write(erg);
 				}
 			}
 			else
 			{
-				System.out.println("Mindestens einen Tag vorgeben");
+				Protokol.write("Mindestens einen Tag vorgeben");
 			}
 		}
 	}

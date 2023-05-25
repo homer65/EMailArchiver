@@ -44,8 +44,8 @@ public class Verarbeitung extends Thread
 		}
 		catch (Exception e)
 		{
-			System.out.println("Verarbeitung:start:Exception:");
-			System.out.println(e.toString());
+			Protokol.write("Verarbeitung:start:Exception:");
+			Protokol.write(e.toString());
 		}
 	}
 	public void addFolder(IMAPFolder folder,ArrayList<IMAPFolder> alfolder)
@@ -53,7 +53,7 @@ public class Verarbeitung extends Thread
 		try
 		{
 			alfolder.add(folder);
-			System.out.println(folder.getURLName());
+			Protokol.write(folder.getURLName().toString());
 			Folder[] folders = folder.list();
 			for (int i=0;i<folders.length;i++)
 			{
@@ -63,8 +63,8 @@ public class Verarbeitung extends Thread
 		}
 		catch (Exception e)
 		{
-			System.out.println("Verarbeitung:addFolder");
-			System.out.println(e.toString());
+			Protokol.write("Verarbeitung:addFolder");
+			Protokol.write(e.toString());
 		}
 	}
 }

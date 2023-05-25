@@ -18,10 +18,9 @@ public class MessageComparator implements Comparator<Message>
 		}
 		catch (Exception e)
 		{
-			System.out.println("MessageComparator:compare:Exception:");
-			System.out.println(e.toString());
+			Protokol.write("MessageComparator:compare:Exception:");
+			Protokol.write(e.toString());
 		}
 		return erg;
 	}
-
 }

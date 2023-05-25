@@ -15,7 +15,7 @@ public class FileImport extends Thread
 {
 	public void run()
 	{
-		System.out.println("FileImport:run:gestartet");
+		Protokol.write("FileImport:run:gestartet");
 		File[] files = new File(Parameter.import_folder).listFiles();
 		Postgres postgres = new Postgres();
 		for (int i=0;i<files.length;i++)
@@ -59,8 +59,8 @@ public class FileImport extends Thread
 		            }
 		            catch (Exception e)
 		            {
-						System.out.println("FileImport:run:extraktTags:Exception:");
-						System.out.println(e.toString());
+						Protokol.write("FileImport:run:extraktTags:Exception:");
+						Protokol.write(e.toString());
 		            }
 			        altag.add("#imported");
 					long nummer = getNummer(file.getName());
@@ -74,11 +74,11 @@ public class FileImport extends Thread
 			}
 			catch (Exception e)
 			{
-				System.out.println("FileImport:run:Exception:");
-				System.out.println(e.toString());
+				Protokol.write("FileImport:run:Exception:");
+				Protokol.write(e.toString());
 			}
 		}
-		System.out.println("FileImport:run:beendet");
+		Protokol.write("FileImport:run:beendet");
 	}
 	public long getNummer(String name)
 	{

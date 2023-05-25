@@ -93,17 +93,17 @@ public class TagMenu extends JFrame implements ActionListener
 					}
 					else
 					{
-						System.out.println("Tag muss mit # anfangen um geloescht zu werden");
+						Protokol.write("Tag muss mit # anfangen um geloescht zu werden");
 					}
 				}
 				else
 				{
-					System.out.println("Tag muss laenger 1 sein");
+					Protokol.write("Tag muss laenger 1 sein");
 				}
 			}
 			else
 			{
-				System.out.println("Bitte ein Tag anklicken");
+				Protokol.write("Bitte ein Tag anklicken");
 			}
 			if (donedelete)
 			{

@@ -23,8 +23,8 @@ public class Initialisieren
 		}
 		catch (Exception e)
 		{
-			System.out.println("Initialisieren:start:Exception:");
-			System.out.println(e.toString());
+			Protokol.write("Initialisieren:start:Exception:");
+			Protokol.write(e.toString());
 		}
 		Parameter parameter = new Parameter();
 		parameter.print();

@@ -54,8 +54,8 @@ public class Postgres
             catch (Exception e) 
             {
                 con = null;
-                System.out.println("Postgres:connect:Exception:");
-                System.out.println(e.toString());
+                Protokol.write("Postgres:connect:Exception:");
+                Protokol.write(e.toString());
             }
         }
         return;
@@ -68,8 +68,8 @@ public class Postgres
     	}
     	catch (Exception e)
     	{
-    		System.out.println("Postgres:close:Exception:");
-    		System.out.println(e.toString());
+    		Protokol.write("Postgres:close:Exception:");
+    		Protokol.write(e.toString());
     	}
     }
     public void commit()
@@ -80,21 +80,21 @@ public class Postgres
     	}
     	catch (Exception e)
     	{
-    		System.out.println("Postgres:commit:Exception:");
-    		System.out.println(e.toString());
+    		Protokol.write("Postgres:commit:Exception:");
+    		Protokol.write(e.toString());
     	}
     }
     public void rollback()
     {
-   		System.out.println("Postgres:rollback:Will do Rollback:");
+   		Protokol.write("Postgres:rollback:Will do Rollback:");
     	try
     	{
     		con.rollback();
     	}
     	catch (Exception e)
     	{
-    		System.out.println("Postgres:rollback:Exception:");
-    		System.out.println(e.toString());
+    		Protokol.write("Postgres:rollback:Exception:");
+    		Protokol.write(e.toString());
     	}
     }
     public ArrayList<SatzTag> getAllTags()
@@ -123,8 +123,8 @@ public class Postgres
         } 
         catch (Exception e) 
         {
-            System.out.println("Postgres:getAllTags:Exception:");
-            System.out.println(e.toString());
+            Protokol.write("Postgres:getAllTags:Exception:");
+            Protokol.write(e.toString());
             rollback();
         }
         return erg;
@@ -150,8 +150,8 @@ public class Postgres
     	}
     	catch (Exception e)
     	{
-            System.out.println("Postgres:getAllId:Exception:");
-            System.out.println(e.toString());
+            Protokol.write("Postgres:getAllId:Exception:");
+            Protokol.write(e.toString());
             rollback();
     	}
     	return erg;
@@ -179,8 +179,8 @@ public class Postgres
         } 
         catch (Exception e) 
         {
-            System.out.println("Postgres:getBody:Exception:");
-            System.out.println(e.toString());
+            Protokol.write("Postgres:getBody:Exception:");
+            Protokol.write(e.toString());
             rollback();
         }
         return erg;
@@ -210,8 +210,8 @@ public class Postgres
         } 
         catch (Exception e) 
         {
-            System.out.println("Postgres:getOneTag:Exception:");
-            System.out.println(e.toString());
+            Protokol.write("Postgres:getOneTag:Exception:");
+            Protokol.write(e.toString());
             rollback();
         }
         return erg;
@@ -245,8 +245,8 @@ public class Postgres
         } 
         catch (Exception e) 
         {
-            System.out.println("Postgres:getOneEMail:Exception:");
-            System.out.println(e.toString());
+            Protokol.write("Postgres:getOneEMail:Exception:");
+            Protokol.write(e.toString());
             rollback();
         }
         return erg;
@@ -280,8 +280,8 @@ public class Postgres
         } 
         catch (Exception e) 
         {
-            System.out.println("Postgres:searchEMailSubject:Exception:");
-            System.out.println(e.toString());
+            Protokol.write("Postgres:searchEMailSubject:Exception:");
+            Protokol.write(e.toString());
             rollback();
         }
         return erg;
@@ -309,8 +309,8 @@ public class Postgres
         } 
         catch (Exception e) 
         {
-            System.out.println("Postgres:getFromList:Exception:");
-            System.out.println(e.toString());
+            Protokol.write("Postgres:getFromList:Exception:");
+            Protokol.write(e.toString());
             rollback();
         }
         return erg;
@@ -339,8 +339,8 @@ public class Postgres
         } 
         catch (Exception e)
         {
-            System.out.println("Postgres:getToList:Exception:");
-            System.out.println(e.toString());
+            Protokol.write("Postgres:getToList:Exception:");
+            Protokol.write(e.toString());
             rollback();
         }
         return erg;
@@ -368,8 +368,8 @@ public class Postgres
         } 
         catch (Exception e) 
         {
-            System.out.println("Postgres:getTgs:Exception:");
-            System.out.println(e.toString());
+            Protokol.write("Postgres:getTgs:Exception:");
+            Protokol.write(e.toString());
             rollback();
         }
         return erg;
@@ -512,9 +512,9 @@ public class Postgres
 		}
 		catch (Exception e)
 		{
-			System.out.println("Postgres:insertMessage:Exception:");
-			System.out.println(e.toString());
-			System.out.println(sql);
+			Protokol.write("Postgres:insertMessage:Exception:");
+			Protokol.write(e.toString());
+			Protokol.write(sql);
 			erg = e.toString();
 			rollback();
 		}
@@ -555,9 +555,9 @@ public class Postgres
 		}
 		catch (Exception e)
 		{
-			System.out.println("Postgres:deleteMessage:Exception:");
-			System.out.println(e.toString());
-			System.out.println(sql);
+			Protokol.write("Postgres:deleteMessage:Exception:");
+			Protokol.write(e.toString());
+			Protokol.write(sql);
 			rollback();
 		}
     }
@@ -590,8 +590,8 @@ public class Postgres
 		}
 		catch (Exception e)
 		{
-			System.out.println("Postgres:changeTags:Exception:");
-			System.out.println(e.toString());
+			Protokol.write("Postgres:changeTags:Exception:");
+			Protokol.write(e.toString());
 			erg = e.toString();
 			rollback();
 		}

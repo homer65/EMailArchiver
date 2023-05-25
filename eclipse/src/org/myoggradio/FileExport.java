@@ -12,7 +12,7 @@ public class FileExport extends Thread
 {
 	public void run()
 	{
-		System.out.println("FileExport:run:gestartet");
+		Protokol.write("FileExport:run:gestartet");
 		Postgres postgres = new Postgres();
 		ArrayList<Long> ids = postgres.getAllId();
 		for (int i=0;i<ids.size();i++)
@@ -44,10 +44,10 @@ public class FileExport extends Thread
 			}
 			catch (Exception e)
 			{
-				System.out.println("FileExport:run:Exception:");
-				System.out.println(e.toString());
+				Protokol.write("FileExport:run:Exception:");
+				Protokol.write(e.toString());
 			}
 		}
-		System.out.println("FileExport:run:beendet");
+		Protokol.write("FileExport:run:beendet");
 	}
 }

@@ -76,8 +76,8 @@ public class EineMessageMenu extends JFrame implements ActionListener
 		}
 		catch (Exception e)
 		{
-			System.out.println("EineMessageMenu::Exception:");
-			System.out.println(e.toString());
+			Protokol.write("EineMessageMenu::Exception:");
+			Protokol.write(e.toString());
 		}
 		JLabel lab0 = new JLabel("Send: " + datum_s + " Received: " + datum_r);
 		JLabel lab1 = new JLabel("Subject: " +subject);
@@ -135,8 +135,8 @@ public class EineMessageMenu extends JFrame implements ActionListener
 			}
 			catch (Exception e)
 			{
-				System.out.println("EineMessageMenu:butt1:");
-				System.out.println(e.toString());
+				Protokol.write("EineMessageMenu:butt1:");
+				Protokol.write(e.toString());
 			}
 		}
 		if (quelle == butt2)
@@ -159,8 +159,8 @@ public class EineMessageMenu extends JFrame implements ActionListener
 				String erg = postgres.insertMessage(msg,altags,0);
 				if (erg != null)
 				{
-					System.out.println("Postgres returned: ");
-					System.out.println(erg);
+					Protokol.write("Postgres returned: ");
+					Protokol.write(erg);
 				}
 				else
 				{
@@ -172,8 +172,8 @@ public class EineMessageMenu extends JFrame implements ActionListener
 						}
 						catch (Exception e)
 						{
-							System.out.println("EineMessageMenu:actionPerformed:butt2:Exception:");
-							System.out.println(e.toString());
+							Protokol.write("EineMessageMenu:actionPerformed:butt2:Exception:");
+							Protokol.write(e.toString());
 						}
 					}
 				}
@@ -181,7 +181,7 @@ public class EineMessageMenu extends JFrame implements ActionListener
 			}
 			else
 			{
-				System.out.println("Mindestens einen Tag vorgeben");
+				Protokol.write("Mindestens einen Tag vorgeben");
 			}
 		}
 		
