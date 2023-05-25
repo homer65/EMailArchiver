@@ -19,7 +19,8 @@ public class TagMenu extends JFrame implements ActionListener
 	private static final long serialVersionUID = 1L;
 	private String tag = null;
 	private JButton butt1 = new JButton("choose Tag");
-	private JButton butt2 = new JButton("delete Tag");
+	private JButton butt2 = new JButton("delete tagged EMail");
+	private JButton butt3 = new JButton("remove Tag from EMail");
 	public void setTag(String s)
 	{
 		tag = s;
@@ -45,12 +46,14 @@ public class TagMenu extends JFrame implements ActionListener
 		cpan.setLayout(new BorderLayout());
 		cpan.add(span,BorderLayout.CENTER);
 		JPanel bpan = new JPanel();
-		bpan.setLayout(new GridLayout(1,2));
+		bpan.setLayout(new GridLayout(1,3));
 		bpan.add(butt1);
 		bpan.add(butt2);
+		bpan.add(butt3);
 		cpan.add(bpan,BorderLayout.SOUTH);
 		butt1.addActionListener(this);
 		butt2.addActionListener(this);
+		butt3.addActionListener(this);
 		setContentPane(cpan);
 	}
 	public void anzeigen()
@@ -78,7 +81,7 @@ public class TagMenu extends JFrame implements ActionListener
 					String x = tag.substring(0,1);
 					if (x.equals("#"))
 					{
-						int rc = JOptionPane.showConfirmDialog(this, "Wirklich loeschen", "",JOptionPane.YES_NO_OPTION);
+						int rc = JOptionPane.showConfirmDialog(this, "Wirklich alle EMail zu diesem Tag löschen", "",JOptionPane.YES_NO_OPTION);
 						if(rc == 0) // Yes
 						{
 							Postgres postgres = new Postgres();
@@ -93,12 +96,12 @@ public class TagMenu extends JFrame implements ActionListener
 					}
 					else
 					{
-						Protokol.write("Tag muss mit # anfangen um geloescht zu werden");
+						Protokol.write("Tag muss mit # anfangen um gelöscht zu werden");
 					}
 				}
 				else
 				{
-					Protokol.write("Tag muss laenger 1 sein");
+					Protokol.write("Tag muss länger 1 sein");
 				}
 			}
 			else
@@ -110,6 +113,33 @@ public class TagMenu extends JFrame implements ActionListener
 				ArchivVerarbeitung av = new ArchivVerarbeitung();
 				av.start();
 				dispose();
+			}
+		}
+		if (quelle == butt3)
+		{
+			if (tag != null)
+			{
+				if (tag.length() > 1)
+				{
+					String x = tag.substring(0,1);
+					if (x.equals("#"))
+					{
+						Postgres postgres = new Postgres();
+						postgres.removeTag(tag);
+					}
+					else
+					{
+						Protokol.write("Tag muss mit # anfangen um removed zu werden");
+					}
+				}
+				else
+				{
+					Protokol.write("Tag muss länger 1 sein");
+				}
+			}
+			else
+			{
+				Protokol.write("Bitte ein Tag anklicken");
 			}
 		}
 	}

@@ -345,6 +345,27 @@ public class Postgres
         }
         return erg;
     }
+    public void removeTag(String tag)
+    {
+       	if (con == null) connect();
+        String sql = "delete";
+        sql += " from tags";
+        sql += " where tag = ?";
+		try
+		{
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1,tag);
+			stmt.executeUpdate();
+			stmt.close();
+			con.commit();
+		}
+		catch (Exception e)
+		{
+			Protokol.write("Postgres:removeTag:Exception:");
+			Protokol.write(e.toString());
+			rollback();
+		}
+    }
     public String getTags(long id)
     {
        	if (con == null) connect();
