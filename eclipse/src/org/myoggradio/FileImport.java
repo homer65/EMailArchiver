@@ -23,7 +23,7 @@ public class FileImport extends Thread
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{
-			Parameter.import_folder = chooser.getSelectedFile().getAbsolutePath();
+			Parameter.import_folder = chooser.getSelectedFile().getAbsolutePath() + File.separator;
 			File[] files = new File(Parameter.import_folder).listFiles();
 			Postgres postgres = new Postgres();
 			for (int i=0;i<files.length;i++)

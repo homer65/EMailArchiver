@@ -21,7 +21,8 @@ public class FileExport extends Thread
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{
-			Parameter.export_folder = chooser.getSelectedFile().getAbsolutePath();
+			Parameter.export_folder = chooser.getSelectedFile().getAbsolutePath() + File.separator;
+			Protokol.write("FileExport:run:Export Directory: " + Parameter.export_folder);
 			Postgres postgres = new Postgres();
 			ArrayList<Long> ids = postgres.getAllId();
 			for (int i=0;i<ids.size();i++)
