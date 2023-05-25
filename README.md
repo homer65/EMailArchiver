@@ -76,4 +76,4 @@ import_folder - Ordner aus dem EMail beim Import gelesen werden. Achtung: es wer
 
 import_delete - Löscht die EMail nach einem Import Versuch aus dem Filesystem wenn true
 
-
+protokol - Pfad zur Log Datei

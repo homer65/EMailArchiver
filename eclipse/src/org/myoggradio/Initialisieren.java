@@ -51,6 +51,7 @@ public class Initialisieren
 			if (feld.equals("export_folder")) Parameter.export_folder = wert;
 			if (feld.equals("import_folder")) Parameter.import_folder = wert;
 			if (feld.equals("import_delete")) Parameter.import_delete = wert;
+			if (feld.equals("protokol")) Parameter.protokol = wert;
 		}
 	}
 }

@@ -2,7 +2,7 @@ package org.myoggradio;
 
 public class Parameter 
 {
-	public static String version = "Version 0.21 25.05.2023";
+	public static String version = "Version 0.22 25.05.2023";
 	public static String mail_server = "";
 	public static String mail_user = "";
 	public static String mail_passwort = "";
@@ -19,6 +19,7 @@ public class Parameter
 	public static String export_folder = "/home/christian/email/";
 	public static String import_folder = "/home/christian/email/";
 	public static String import_delete = "false";
+	public static String protokol = "EMailArchiver.log";
 	public void print()
 	{
 		Protokol.write("mail_server=" + mail_server + "=");
@@ -35,5 +36,6 @@ public class Parameter
 		Protokol.write("exort_folder=" + export_folder + "=");
 		Protokol.write("import_folder=" + import_folder + "=");
 		Protokol.write("import_delete=" + import_delete + "=");
+		Protokol.write("protokol=" + protokol + "=");
 	}
 }

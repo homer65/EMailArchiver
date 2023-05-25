@@ -15,3 +15,4 @@ sqlite_url=jdbc:sqlite:EMailArchiver.db
 export_folder=/home/christian/email/=
 import_folder=/home/christian/email/=
 import_delete=false=
+protokol=EMailArchiver.log=
