@@ -26,7 +26,7 @@ public class TagMenu extends JFrame implements ActionListener,Comparator<SatzTag
 	private JButton butt3 = new JButton("remove Tag from EMail");
 	private JButton butt4 = new JButton("sort count ascending");
 	private JButton butt5 = new JButton("sort count descending");
-	private JButton butt6 = new JButton("sort after Tag Name");
+	private JButton butt6 = new JButton("sort Tag Name");
 	public void setTag(String s)
 	{
 		tag = s;
