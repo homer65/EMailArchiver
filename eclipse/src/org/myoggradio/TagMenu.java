@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,13 +15,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionListener;
-public class TagMenu extends JFrame implements ActionListener
+public class TagMenu extends JFrame implements ActionListener,Comparator<SatzTag>
 {
 	private static final long serialVersionUID = 1L;
+	private ArrayList<SatzTag> tags = null;
 	private String tag = null;
+	private int sortmethod = 0;
 	private JButton butt1 = new JButton("choose Tag");
 	private JButton butt2 = new JButton("delete tagged EMail");
 	private JButton butt3 = new JButton("remove Tag from EMail");
+	private JButton butt4 = new JButton("sort count ascending");
+	private JButton butt5 = new JButton("sort count descending");
+	private JButton butt6 = new JButton("sort after Tag Name");
 	public void setTag(String s)
 	{
 		tag = s;
@@ -28,6 +34,7 @@ public class TagMenu extends JFrame implements ActionListener
 	public TagMenu(ArrayList<SatzTag> tags)
 	{
 		super("Tag Menu");
+		this.tags = tags;
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		SatzTag[] stags = new SatzTag[tags.size()];
 		for (int i=0;i<tags.size();i++)
@@ -51,9 +58,18 @@ public class TagMenu extends JFrame implements ActionListener
 		bpan.add(butt2);
 		bpan.add(butt3);
 		cpan.add(bpan,BorderLayout.SOUTH);
+		JPanel npan = new JPanel();
+		npan.setLayout(new GridLayout(1,3));
+		npan.add(butt4);
+		npan.add(butt5);
+		npan.add(butt6);
+		cpan.add(npan,BorderLayout.NORTH);
 		butt1.addActionListener(this);
 		butt2.addActionListener(this);
 		butt3.addActionListener(this);
+		butt4.addActionListener(this);
+		butt5.addActionListener(this);
+		butt6.addActionListener(this);
 		setContentPane(cpan);
 	}
 	public void anzeigen()
@@ -142,5 +158,53 @@ public class TagMenu extends JFrame implements ActionListener
 				Protokol.write("Bitte ein Tag anklicken");
 			}
 		}
+		if (quelle == butt4)
+		{
+			sortmethod = 0;
+			tags.sort(this);
+			TagMenu tm = new TagMenu(tags);
+			tm.anzeigen();
+			dispose();
+		}
+		if (quelle == butt5)
+		{
+			sortmethod = 1;
+			tags.sort(this);
+			TagMenu tm = new TagMenu(tags);
+			tm.anzeigen();
+			dispose();
+		}
+		if (quelle == butt6)
+		{
+			sortmethod = 2;
+			tags.sort(this);
+			TagMenu tm = new TagMenu(tags);
+			tm.anzeigen();
+			dispose();
+		}
+	}
+	@Override
+	public int compare(SatzTag arg0, SatzTag arg1) 
+	{
+		int erg = 0;
+		int i0 = arg0.getAnzahl();
+		int i1 = arg1.getAnzahl();
+		String s0 = arg0.getTag();
+		String s1 = arg1.getTag();
+		if (sortmethod == 0)
+		{
+			if (i0 > i1) erg = 1;
+			if (i1 > i0) erg = -1;
+		}
+		else if (sortmethod == 1)
+		{
+			if (i0 > i1) erg = -1;
+			if (i1 > i0) erg = 1;
+		}
+		else if (sortmethod == 2)
+		{
+			erg = s0.compareTo(s1);
+		}
+		return erg;
 	}
 }
