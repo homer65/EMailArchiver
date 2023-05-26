@@ -10,6 +10,8 @@ Hinweise zur Installation für SQLite:
 
 (2) git clone https://github.com/homer65/EMailArchiver.git
 
+(2A) postgresql-42.2.18.jar aus lib Ordner entfernen
+
 (3) EMailArchiver.ini.sample nach EMailArchiver.ini kopieren und anpassen
     Insbesondere: sqlite=true=
     
@@ -25,6 +27,8 @@ Hinweise zur Installation für Postgres:
 (1) Java mindestens Version 11 sollte installiert sein
 
 (2) git clone https://github.com/homer65/EMailArchiver.git
+
+(2A) sqlite-jdbc-3.41.2.2.jar aus lib Ordner entfernen
 
 (3) EMailArchiver.ini.sample nach EMailArchiver.ini kopieren und anpassen
     Insbesondere: sqlite=false=
