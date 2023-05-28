@@ -27,7 +27,6 @@ import javax.swing.JTextField;
 public class EineEMailMenu extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
-	private String html = null;
 	private JButton butt1 = new JButton("Show");
 	private JButton butt2 = new JButton("Change Tag");
 	private JButton butt3 = new JButton("Show HTML Body");
@@ -184,11 +183,11 @@ public class EineEMailMenu extends JFrame implements ActionListener
 	            MimeMessage message = new MimeMessage(mailSession,ein);
 	            ein.close();
 				MessageBody mbody = new MessageBody();
-				html = mbody.getBody(message,true);
+				SatzHTML satz = mbody.getBody(message,true);
 				pfad = Parameter.mail_temp + "mailbody.html";
 				aus = new FileOutputStream(new File(pfad));
-				Writer wrt = new OutputStreamWriter(aus,"UTF-8");
-				wrt.write(html);
+				Writer wrt = new OutputStreamWriter(aus,satz.getCharset());
+				wrt.write(satz.getHTML());
 				wrt.close();
 				ProcessBuilder builder = new ProcessBuilder(Parameter.html_programm,pfad); 
 				builder.start();

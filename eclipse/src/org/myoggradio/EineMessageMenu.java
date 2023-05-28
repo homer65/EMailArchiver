@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +26,6 @@ public class EineMessageMenu extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	private Message msg = null;
-	private String html = null;
 	private JButton butt1 = new JButton("Show");
 	private JButton butt2 = new JButton("Archive");
 	private JButton butt3 = new JButton("Show HTML Body");
@@ -42,8 +43,6 @@ public class EineMessageMenu extends JFrame implements ActionListener
 		String datum_r = "";
 		String datum_s = "";
 		String typ = "";
-		MessageBody mbody = new MessageBody();
-		html = mbody.getBody(msg,true);
 		try
 		{
 			subject = msg.getSubject();
@@ -192,8 +191,23 @@ public class EineMessageMenu extends JFrame implements ActionListener
 		}
 		if (quelle == butt3)
 		{
-			BodyMenu bm = new BodyMenu(html);
-			bm.anzeigen();
+			try
+			{
+				MessageBody mbody = new MessageBody();
+				SatzHTML satz = mbody.getBody(msg,true);
+				String pfad = Parameter.mail_temp + "mailbody.html";
+				FileOutputStream aus = new FileOutputStream(new File(pfad));
+				Writer wrt = new OutputStreamWriter(aus,satz.getCharset());
+				wrt.write(satz.getHTML());
+				wrt.close();
+				ProcessBuilder builder = new ProcessBuilder(Parameter.html_programm,pfad); 
+				builder.start();
+			}
+			catch (Exception e)
+			{
+				Protokol.write("EineMessageMenu:actionPerformed:butt3:Exception:");
+				Protokol.write(e.toString());
+			}
 		}
 	}
 }

@@ -6,19 +6,21 @@ import javax.mail.Part;
 
 public class MessageBody 
 {
-	public String getBody(Message msg,boolean html)
+	public SatzHTML getBody(Message msg,boolean html)
 	{
-		String erg = "";
+		SatzHTML erg = new SatzHTML();
 		try
 		{
 			Object body = msg.getContent();
 			if (body instanceof Multipart)
 			{
-				erg += processMultipart((Multipart) body,html);
+				SatzHTML test = processMultipart((Multipart) body,html);
+				if (test != null) erg = test;
 			}
 			else
 			{
-				erg += processPart(msg,html);
+				SatzHTML test = processPart(msg,html);
+				if (test != null) erg = test;
 			}
 		}
 		catch (Exception e)
@@ -28,14 +30,15 @@ public class MessageBody
 		}
 		return erg;
 	}
-	public String processMultipart(Multipart mp,boolean html)
+	public SatzHTML processMultipart(Multipart mp,boolean html)
 	{
-		String erg = "";
+		SatzHTML erg = null;
 		try
 		{
 			for (int i=0;i<mp.getCount();i++)
 			{
-				erg += processPart(mp.getBodyPart(i),html);
+				SatzHTML test = processPart(mp.getBodyPart(i),html);
+				if (test != null) erg = test;
 			}
 		}
 		catch (Exception e)
@@ -45,30 +48,40 @@ public class MessageBody
 		}
 		return erg;
 	}
-	public String processPart(Part p,boolean html)
+	public SatzHTML processPart(Part p,boolean html)
 	{
-		String erg = "";
+		SatzHTML erg = null;;
 		try
 		{
 			String contentType = p.getContentType();
 			if (contentType.toLowerCase().startsWith("multipart/"))
 			{
-				erg += processMultipart((Multipart) p.getContent(),html);
+				SatzHTML test = processMultipart((Multipart) p.getContent(),html);
+				if (test != null) erg = test;
 			}
 			else if (contentType.toLowerCase().startsWith("text/plain"))
 			{
 				Protokol.write("MessageBody:processPart:text/plain detected");
 				if (!html)
 				{
-					erg += (String) p.getContent();
+					String shtml = (String) p.getContent();
+					String charset = getCharset(contentType);
+					erg = new SatzHTML();
+					erg.setHTML(shtml);
+					erg.setCharset(charset);
 				}
 			}
 			else if (contentType.toLowerCase().startsWith("text/html"))
 			{
 				Protokol.write("MessageBody:processPart:text/html detected");
+				Protokol.write(contentType);
 				if (html)
 				{
-					erg += (String) p.getContent();
+					String shtml = (String) p.getContent();
+					String charset = getCharset(contentType);
+					erg = new SatzHTML();
+					erg.setHTML(shtml);
+					erg.setCharset(charset);
 				}
 			}
 			else
@@ -80,6 +93,26 @@ public class MessageBody
 		{
 			Protokol.write("MessageBody:processPart:Exception:");
 			Protokol.write(e.toString());	
+		}
+		return erg;
+	}
+	public String getCharset(String satz)
+	{
+		String erg = "UTF-8";
+		String[] worte = satz.split(";");
+		for (int i=0;i<worte.length;i++)
+		{
+			String wort = worte[i].trim();
+			String[] token = wort.split("=");
+			try
+			{
+				if (token[0].equals("charset")) erg = token[1];
+			}
+			catch (Exception e)
+			{
+				Protokol.write("MessageBody:getCharset:Exception");
+				Protokol.write(e.toString());
+			}
 		}
 		return erg;
 	}
