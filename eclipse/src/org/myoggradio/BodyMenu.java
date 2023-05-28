@@ -1,29 +1,32 @@
 package org.myoggradio;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-public class BodyMenu extends JFrame
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+public class BodyMenu 
 {
-	private static final long serialVersionUID = 1L;
+	private String filename = null;
 	public BodyMenu(String body)
 	{
-		super("Body Menu ");
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		JPanel cpan = new JPanel();
-		cpan.setLayout(new BorderLayout());
-		JTextArea ta = new JTextArea();
-		ta.setText(body);
-		JScrollPane span = new JScrollPane(ta);
-		span.setPreferredSize(new Dimension(600,800));
-		cpan.add(span,BorderLayout.CENTER);
-		setContentPane(cpan);
+		try
+		{
+			filename = Parameter.mail_temp + "mailbody.html";
+			File aus = new File(filename);
+			FileOutputStream fos = new FileOutputStream(aus,true);
+			Writer wrt = new OutputStreamWriter(fos,"UTF-8");
+			wrt.write(body);
+			wrt.close();
+			ProcessBuilder builder = new ProcessBuilder(Parameter.html_programm,filename); 
+			builder.start();
+		}
+		catch (Exception e)
+		{
+			Protokol.write("BodyMenu::Exception");
+			Protokol.write(e.toString());
+		}
 	}
 	public void anzeigen()
 	{
-		pack();
-		setVisible(true);
+
 	}
 }

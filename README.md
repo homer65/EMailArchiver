@@ -62,6 +62,8 @@ mail_temp - Ordner in dem EMail zwischengespeichert wird
 
 mail_delete - Soll eine EMail nach dem Archivieren auf dem IMAP Server gelöscht werden (true oder false)
 
+html_programm - Pfad zum Programm mit dem HTML angezeigt wird
+
 sqlite - Soll SQLite genutzt werden (true oder false). Wenn SQLite genutzt wird, dann kein Postgres
 
 sqlite_url - Nur falls SQLite genutzt wird. Normalerweise sollte die URL nicht geändert werden, da eine SQLite Datenbank mitgeliefert ist
