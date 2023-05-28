@@ -106,13 +106,26 @@ public class MessageBody
 			String[] token = wort.split("=");
 			try
 			{
-				if (token[0].equals("charset")) erg = token[1];
+				if (token[0].equals("charset"))
+				{
+					erg = untrim(token[1]);
+				}
 			}
 			catch (Exception e)
 			{
 				Protokol.write("MessageBody:getCharset:Exception");
 				Protokol.write(e.toString());
 			}
+		}
+		return erg;
+	}
+	public String untrim(String wort)
+	{
+		String erg = "";
+		for (int i=0;i<wort.length();i++)
+		{
+			String ch = wort.substring(i,i+1);
+			if (!ch.equals("\"")) erg +=ch;
 		}
 		return erg;
 	}
