@@ -4,15 +4,21 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Properties;
 
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,8 +27,10 @@ import javax.swing.JTextField;
 public class EineEMailMenu extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
+	private String html = null;
 	private JButton butt1 = new JButton("Show");
 	private JButton butt2 = new JButton("Change Tag");
+	private JButton butt3 = new JButton("Show HTML Body");
 	private JTextField tf1 = new JTextField();
 	private JLabel ltf1 = new JLabel("Tags ");
 	private long id = 0;
@@ -74,9 +82,10 @@ public class EineEMailMenu extends JFrame implements ActionListener
 		lpan.add(lab4);
 		lpan.add(lab5);
 		JPanel bpan = new JPanel();
-		bpan.setLayout(new GridLayout(1,2));
+		bpan.setLayout(new GridLayout(1,3));
 		bpan.add(butt1);
 		bpan.add(butt2);
+		bpan.add(butt3);
 		JPanel tpan = new JPanel();
 		tpan.setLayout(new BorderLayout());
 		tpan.add(ltf1,BorderLayout.WEST);
@@ -88,6 +97,7 @@ public class EineEMailMenu extends JFrame implements ActionListener
 		cpan.add(bpan,BorderLayout.SOUTH);
 		butt1.addActionListener(this);
 		butt2.addActionListener(this);
+		butt3.addActionListener(this);
 		setContentPane(cpan);
 	}
 	public void anzeigen()
@@ -150,6 +160,43 @@ public class EineEMailMenu extends JFrame implements ActionListener
 			else
 			{
 				Protokol.write("Mindestens einen Tag vorgeben");
+			}
+		}
+		if (quelle == butt3)
+		{
+			try
+			{
+				String pfad = Parameter.mail_temp + "GetEMail.eml";
+				Postgres postgres = new Postgres();
+				InputStream ein = postgres.getBody(id);
+				OutputStream aus = new FileOutputStream(new File(pfad));
+				int n = ein.read();
+				while (n >= 0)
+				{
+					aus.write(n);
+					n = ein.read();
+				}
+				aus.close();
+				ein.close();
+				ein = new FileInputStream(pfad);
+				Properties props = new Properties();
+	            Session mailSession = Session.getDefaultInstance(props, null);
+	            MimeMessage message = new MimeMessage(mailSession,ein);
+	            ein.close();
+				MessageBody mbody = new MessageBody();
+				html = mbody.getBody(message,true);
+				pfad = Parameter.mail_temp + "mailbody.html";
+				aus = new FileOutputStream(new File(pfad));
+				Writer wrt = new OutputStreamWriter(aus,"UTF-8");
+				wrt.write(html);
+				wrt.close();
+				ProcessBuilder builder = new ProcessBuilder(Parameter.html_programm,pfad); 
+				builder.start();
+			}
+			catch (Exception e)
+			{
+				Protokol.write("EineEMailMenu:actionPerformed:butt3:Exception:");
+				Protokol.write(e.toString());
 			}
 		}
 	}

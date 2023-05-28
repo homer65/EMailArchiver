@@ -34,7 +34,7 @@ public class FileExport extends Thread
 					String filename = Parameter.export_folder + id + ".eml";
 	 				File file = new File(filename);
 	 				byte[] buffer = new byte[8192];
-	 				System.out.println("Will write to: " + filename);
+	 				Protokol.write("Will write to: " + filename);
 					OutputStream aus = new FileOutputStream(file);
 					int n = ein.read(buffer);
 					while (n >= 0)

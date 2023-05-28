@@ -34,7 +34,7 @@ public class FileImport extends Thread
 					if (isEML(file))
 					{
 						String pfad = file.getAbsolutePath();
-						System.out.println("Will read from: " + pfad);
+						Protokol.write("Will read from: " + pfad);
 						InputStream ein = new FileInputStream(pfad);
 						Properties props = new Properties();
 			            Session mailSession = Session.getDefaultInstance(props, null);
