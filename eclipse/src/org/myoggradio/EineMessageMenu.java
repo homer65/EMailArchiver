@@ -19,13 +19,17 @@ import javax.swing.JTextField;
 import javax.mail.Address;
 import javax.mail.Flags;
 import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.Part;
 import javax.mail.internet.InternetAddress;
 public class EineMessageMenu extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	private Message msg = null;
+	private String body = null;
 	private JButton butt1 = new JButton("Show");
 	private JButton butt2 = new JButton("Archive");
+	private JButton butt3 = new JButton("Show Body (beta)");
 	private JTextField tf1 = new JTextField();
 	private JLabel ltf1 = new JLabel("Tags ");
 	public EineMessageMenu(Message msg)
@@ -40,6 +44,7 @@ public class EineMessageMenu extends JFrame implements ActionListener
 		String datum_r = "";
 		String datum_s = "";
 		String typ = "";
+		body = getBody(msg);
 		try
 		{
 			subject = msg.getSubject();
@@ -98,9 +103,10 @@ public class EineMessageMenu extends JFrame implements ActionListener
 		lpan.add(lab4);
 		lpan.add(lab5);
 		JPanel bpan = new JPanel();
-		bpan.setLayout(new GridLayout(1,2));
+		bpan.setLayout(new GridLayout(1,3));
 		bpan.add(butt1);
 		bpan.add(butt2);
+		bpan.add(butt3);
 		JPanel tpan = new JPanel();
 		tpan.setLayout(new BorderLayout());
 		tpan.add(ltf1,BorderLayout.WEST);
@@ -112,6 +118,7 @@ public class EineMessageMenu extends JFrame implements ActionListener
 		cpan.add(bpan,BorderLayout.SOUTH);
 		butt1.addActionListener(this);
 		butt2.addActionListener(this);
+		butt3.addActionListener(this);
 		setContentPane(cpan);
 	}
 	public void anzeigen()
@@ -184,6 +191,80 @@ public class EineMessageMenu extends JFrame implements ActionListener
 				Protokol.write("Mindestens einen Tag vorgeben");
 			}
 		}
-		
+		if (quelle == butt3)
+		{
+			BodyMenu bm = new BodyMenu(body);
+			bm.anzeigen();
+		}
+	}
+	public String getBody(Message msg)
+	{
+		String erg = "";
+		try
+		{
+			Object body = msg.getContent();
+			if (body instanceof Multipart)
+			{
+				erg += processMultipart((Multipart) body);
+			}
+			else
+			{
+				erg += processPart(msg);
+			}
+		}
+		catch (Exception e)
+		{
+			Protokol.write("EineMessageMenu:getBody:Exception:");
+			Protokol.write(e.toString());
+		}
+		return erg;
+	}
+	public String processMultipart(Multipart mp)
+	{
+		String erg = "";
+		try
+		{
+			for (int i=0;i<mp.getCount();i++)
+			{
+				erg += processPart(mp.getBodyPart(i));
+			}
+		}
+		catch (Exception e)
+		{
+			Protokol.write("EineMessageMenu:processMultipart:Exception:");
+			Protokol.write(e.toString());
+		}
+		return erg;
+	}
+	public String processPart(Part p)
+	{
+		String erg = "";
+		try
+		{
+			String contentType = p.getContentType();
+			if (contentType.toLowerCase().startsWith("multipart/"))
+			{
+				erg += processMultipart((Multipart) p.getContent());
+			}
+			else if (contentType.toLowerCase().startsWith("text/plain"))
+			{
+				Protokol.write("EineMessageMenu:processPart:text/plain detected");
+				erg += (String) p.getContent();
+			}
+			else if (contentType.toLowerCase().startsWith("text/html"))
+			{
+				Protokol.write("EineMessageMenu:processPart:text/html detected");
+			}
+			else
+			{
+				Protokol.write("EineMessageMenu:processPart:" + contentType + " detected");
+			}
+		}
+		catch (Exception e)
+		{
+			Protokol.write("EineMessageMenu:processPart:Exception:");
+			Protokol.write(e.toString());	
+		}
+		return erg;
 	}
 }
