@@ -16,6 +16,7 @@ import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.mail.Address;
@@ -29,6 +30,7 @@ public class EineMessageMenu extends JFrame implements ActionListener
 	private JButton butt1 = new JButton("Show");
 	private JButton butt2 = new JButton("Archive");
 	private JButton butt3 = new JButton("Show HTML Body");
+	private JButton butt4 = new JButton("Delete");
 	private JTextField tf1 = new JTextField();
 	private JLabel ltf1 = new JLabel("Tags ");
 	public EineMessageMenu(Message msg)
@@ -101,10 +103,11 @@ public class EineMessageMenu extends JFrame implements ActionListener
 		lpan.add(lab4);
 		lpan.add(lab5);
 		JPanel bpan = new JPanel();
-		bpan.setLayout(new GridLayout(1,3));
+		bpan.setLayout(new GridLayout(1,4));
 		bpan.add(butt1);
 		bpan.add(butt2);
 		bpan.add(butt3);
+		bpan.add(butt4);
 		JPanel tpan = new JPanel();
 		tpan.setLayout(new BorderLayout());
 		tpan.add(ltf1,BorderLayout.WEST);
@@ -117,6 +120,7 @@ public class EineMessageMenu extends JFrame implements ActionListener
 		butt1.addActionListener(this);
 		butt2.addActionListener(this);
 		butt3.addActionListener(this);
+		butt4.addActionListener(this);
 		setContentPane(cpan);
 	}
 	public void anzeigen()
@@ -207,6 +211,22 @@ public class EineMessageMenu extends JFrame implements ActionListener
 			{
 				Protokol.write("EineMessageMenu:actionPerformed:butt3:Exception:");
 				Protokol.write(e.toString());
+			}
+		}
+		if (quelle == butt4)
+		{
+			int rc = JOptionPane.showConfirmDialog(this, "Wirklich diese EMail löschen", "",JOptionPane.YES_NO_OPTION);
+			if(rc == 0) // Yes
+			{
+				try
+				{
+					msg.setFlag(Flags.Flag.DELETED,true);
+				}
+				catch (Exception e)
+				{
+					Protokol.write("EineMessageMenu:actionPerformed:butt4:Exception:");
+					Protokol.write(e.toString());
+				}
 			}
 		}
 	}
