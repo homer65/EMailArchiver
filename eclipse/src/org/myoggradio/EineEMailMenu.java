@@ -22,6 +22,7 @@ import javax.mail.internet.MimeMessage;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 public class EineEMailMenu extends JFrame implements ActionListener
@@ -30,6 +31,7 @@ public class EineEMailMenu extends JFrame implements ActionListener
 	private JButton butt1 = new JButton("Show");
 	private JButton butt2 = new JButton("Change Tag");
 	private JButton butt3 = new JButton("Show HTML Body");
+	private JButton butt4 = new JButton("Delete");
 	private JTextField tf1 = new JTextField();
 	private JLabel ltf1 = new JLabel("Tags ");
 	private long id = 0;
@@ -81,10 +83,11 @@ public class EineEMailMenu extends JFrame implements ActionListener
 		lpan.add(lab4);
 		lpan.add(lab5);
 		JPanel bpan = new JPanel();
-		bpan.setLayout(new GridLayout(1,3));
+		bpan.setLayout(new GridLayout(1,4));
 		bpan.add(butt1);
 		bpan.add(butt2);
 		bpan.add(butt3);
+		bpan.add(butt4);
 		JPanel tpan = new JPanel();
 		tpan.setLayout(new BorderLayout());
 		tpan.add(ltf1,BorderLayout.WEST);
@@ -97,6 +100,7 @@ public class EineEMailMenu extends JFrame implements ActionListener
 		butt1.addActionListener(this);
 		butt2.addActionListener(this);
 		butt3.addActionListener(this);
+		butt4.addActionListener(this);
 		setContentPane(cpan);
 	}
 	public void anzeigen()
@@ -196,6 +200,22 @@ public class EineEMailMenu extends JFrame implements ActionListener
 			{
 				Protokol.write("EineEMailMenu:actionPerformed:butt3:Exception:");
 				Protokol.write(e.toString());
+			}
+		}
+		if (quelle == butt4)
+		{
+			Postgres postgres = new Postgres();
+			if (postgres.hasSpecialTag(id))
+			{
+				int rc = JOptionPane.showConfirmDialog(this, "Wirklich diese EMail löschen", "",JOptionPane.YES_NO_OPTION);
+				if(rc == 0) // Yes
+				{
+					postgres.deleteMessage(id);
+				}
+			}
+			else
+			{
+				Protokol.write("EineEMailMenu:actionPerformed:butt4:EMail hat kein # Tag");
 			}
 		}
 	}

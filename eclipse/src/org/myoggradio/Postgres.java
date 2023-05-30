@@ -366,6 +366,38 @@ public class Postgres
 			rollback();
 		}
     }
+    public boolean hasSpecialTag(long id)
+    {
+       	if (con == null) connect();
+    	boolean erg = false;
+        ResultSet rs = null;
+        String sql = "select tag";
+        sql += " from tags";
+        sql += " where email_id = ?";
+        sql += " and tag like ?";
+        try 
+        {
+            stmt = con.prepareStatement(sql);
+            stmt.setLong(1,id);
+            stmt.setString(2,"#%");
+            rs = stmt.executeQuery();
+            while (rs.next())
+            {
+            	erg = true;
+            }
+            rs.close();
+            stmt.close();
+            commit();
+        } 
+        catch (Exception e) 
+        {
+            Protokol.write("Postgres:hasSpecialTag:Exception:");
+            Protokol.write(e.toString());
+            rollback();
+            erg = false;
+        }
+        return erg;
+    }
     public String getTags(long id)
     {
        	if (con == null) connect();
@@ -389,7 +421,7 @@ public class Postgres
         } 
         catch (Exception e) 
         {
-            Protokol.write("Postgres:getTgs:Exception:");
+            Protokol.write("Postgres:getTags:Exception:");
             Protokol.write(e.toString());
             rollback();
         }
