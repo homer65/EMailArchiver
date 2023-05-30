@@ -1,10 +1,14 @@
 package org.myoggradio;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 public class MainMenu extends JFrame implements ActionListener
 {
@@ -14,10 +18,16 @@ public class MainMenu extends JFrame implements ActionListener
 	private JButton butt3 = new JButton("Search Archived");
 	private JButton butt4 = new JButton("Export to Folder");
 	private JButton butt5 = new JButton("Import from Folder");
+	private JLabel lab1 = new JLabel();
 	public MainMenu()
 	{
 		super("Main Menu " + Parameter.version);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		ImageIcon image = new ImageIcon("MyOggRadio.png");
+		lab1 = new JLabel(image);
+		JPanel bpan = new JPanel();
+		bpan.setLayout(new BorderLayout());
+		bpan.add(lab1,BorderLayout.NORTH);
 		JPanel cpan = new JPanel();
 		cpan.setLayout(new GridLayout(5,1));
 		cpan.add(butt1);
@@ -25,13 +35,14 @@ public class MainMenu extends JFrame implements ActionListener
 		cpan.add(butt3);
 		cpan.add(butt4);
 		cpan.add(butt5);
+		bpan.add(cpan,BorderLayout.CENTER);
 		butt1.addActionListener(this);
 		butt2.addActionListener(this);
 		butt3.addActionListener(this);
 		butt4.addActionListener(this);
 		butt5.addActionListener(this);
-		setContentPane(cpan);
-		this.setPreferredSize(new Dimension(400,200));
+		setContentPane(bpan);
+		this.setPreferredSize(new Dimension(800,600));
 	}
 	public void anzeigen()
 	{
