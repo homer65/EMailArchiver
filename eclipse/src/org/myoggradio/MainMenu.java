@@ -23,7 +23,7 @@ public class MainMenu extends JFrame implements ActionListener
 	{
 		super("Main Menu " + Parameter.version);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		ImageIcon image = new ImageIcon("MyOggRadio.png");
+		ImageIcon image = new ImageIcon(Parameter.logo);
 		lab1 = new JLabel(image);
 		JPanel bpan = new JPanel();
 		bpan.setLayout(new BorderLayout());
